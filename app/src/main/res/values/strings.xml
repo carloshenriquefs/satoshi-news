@@ -8,7 +8,6 @@
     <string name="signin">Sign In</string>
 
 
-    <string name="app_name">satoshi</string>
     <string name="log_in_now">Log In Now</string>
     <string name="please_login">Please login to continue using our app</string>
 
@@ -31,5 +30,7 @@
     <string name="name">Name:</string>
     <string name="input_name">Enter your name:</string>
     <string name="login">Log In</string>
+    <string name="have_account">Already have an account ?</string>
+
 
 </resources>

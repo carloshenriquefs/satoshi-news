@@ -1,6 +1,5 @@
 package br.com.fiap.satoshi.screens
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +29,7 @@ import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen() {
 
     Box(
         modifier = Modifier
@@ -46,7 +45,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(R.drawable.bitcoin),
-                contentDescription = "Bitcoin Logo",
+                contentDescription = stringResource(R.string.bitcoin_logo),
                 modifier = Modifier.size(140.dp)
             )
 

@@ -29,7 +29,7 @@ import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier) {
+fun SignUpScreen() {
 
     Box(
         modifier = Modifier
@@ -67,14 +67,6 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
 
             ComponentOutlinedTextField.ComponentSignUp()
 
-            Text(
-                text = stringResource(R.string.forgot_password),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xffFFFFFF),
-                fontFamily = InterRegular
-            )
-
             Button(
                 onClick = {},
                 modifier = Modifier
@@ -92,7 +84,7 @@ fun SignUpScreen(modifier: Modifier = Modifier) {
 
             Row() {
                 Text(
-                    text = stringResource(R.string.dont_account),
+                    text = stringResource(R.string.have_account),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xffFFFFFF),
