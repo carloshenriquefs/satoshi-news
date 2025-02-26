@@ -1,5 +1,5 @@
 <resources>
-
+    <string name="app_name">satoshi</string>
     <string name="bitcoin_logo">Bitcoin Logo</string>
     <string name="satoshi_news">SatoshiNews</string>
     <string name="connect_finances">Conectando você ao futuro\ndas finanças !</string>
@@ -32,5 +32,12 @@
     <string name="login">Log In</string>
     <string name="have_account">Already have an account ?</string>
 
+
+    <string name="green_crypto">Crypto Verde</string>
+    <string name="sustainable_future">O Futuro Sustentável das</string>
+    <string name="coins">Moedas!</string>
+    <string name="invest_consciously">Invista Consciente, Tranforme o Mundo 🌎💚</string>
+    <string name="other_crypto">Other Crypto</string>
+    <string name="see_all">See all</string>
 
 </resources>
