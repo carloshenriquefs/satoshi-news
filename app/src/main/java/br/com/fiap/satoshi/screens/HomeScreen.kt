@@ -21,12 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
+import br.com.fiap.satoshi.ui.theme.Kotta
+import br.com.fiap.satoshi.ui.theme.Marhey
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -46,51 +49,49 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
             Image(
                 painter = painterResource(R.drawable.bitcoin),
-                contentDescription = "Bitcoin Logo",
-                modifier = Modifier.size(180.dp)
+                contentDescription = stringResource(R.string.bitcoin_logo),
+                modifier = Modifier.size(200.dp)
             )
 
-
             Text(
-                text = "SatoshiNews",
+                text = stringResource(R.string.satoshi_news),
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Medium,
                 color = Color(0xffF7931A),
                 modifier = Modifier.padding(bottom = 16.dp),
-                //fontFamily = Marhey
+                fontFamily = Marhey
             )
 
-
             Text(
-                text = "Conectando você ao futuro\ndas finanças !",
+                text = stringResource(R.string.connect_finances),
                 fontSize = 28.sp,
                 textAlign = TextAlign.Center,
                 color = Color(0xffF7931A),
                 modifier = Modifier.padding(top = 16.dp),
-                //fontFamily = Kotta
+                fontFamily = Kotta
             )
 
 
             Button(
                 onClick = {},
                 modifier = Modifier
-                    .padding(top = 32.dp),
+                    .padding(top = 32.dp)
+                    .size(width = 280.dp, height = 45.dp),
                 colors = ButtonDefaults.buttonColors(Color.Black),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(10.dp)
             ) {
                 Text(
-                    text = "Let's Get Started",
+                    text = stringResource(R.string.lets_started),
                     fontSize = 16.sp,
                     color = Color(0xffFFFFFF)
                 )
             }
 
-
-            Row (
+            Row(
                 modifier = Modifier.padding(top = 16.dp)
             ) {
                 Text(
-                    text = "Already have account ? ",
+                    text = stringResource(R.string.already_account),
                     fontSize = 14.sp,
                     color = Color(0xffFFFFFF)
                 )
@@ -98,7 +99,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     modifier = Modifier.width(4.dp)
                 )
                 Text(
-                    text = "Sign In",
+                    text = stringResource(R.string.signin),
                     color = Color(0xffF7931A),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
