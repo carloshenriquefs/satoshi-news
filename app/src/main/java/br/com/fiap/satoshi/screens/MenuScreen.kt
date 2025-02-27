@@ -1,6 +1,5 @@
 package br.com.fiap.satoshi.screens
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -20,27 +19,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,16 +48,22 @@ import br.com.fiap.satoshi.R
 @Composable
 fun MenuScreen() {
 
+    var inputSerachMenu by remember {
+
+        mutableStateOf(value = "")
+
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(R.color.primary))
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().verticalScroll(ScrollState(0))) {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp)
+                    .padding(horizontal = 20.dp)
             ) {
 
                 Row(
@@ -85,14 +90,15 @@ fun MenuScreen() {
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
+                    value = inputSerachMenu,
+                    onValueChange = { inputSerachMenu = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = "Search") },
                     trailingIcon = {
                         Image(
                             painter = painterResource(R.drawable.search_icon),
-                            contentDescription = "Search Icon"
+                            contentDescription = "Search Icon",
+                            modifier = Modifier.clickable {  }
                         )
                     },
                     shape = RoundedCornerShape(10.dp),
@@ -102,8 +108,12 @@ fun MenuScreen() {
                         unfocusedContainerColor = colorResource(R.color.secondary),
                         focusedContainerColor = colorResource(R.color.secondary),
                         unfocusedLabelColor = Color.White,
-                        focusedLabelColor = Color.White
-                    )
+                        focusedLabelColor = Color.White,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    ),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
                 )
 
                 Spacer(modifier = Modifier.height(35.dp))
@@ -166,6 +176,16 @@ fun MenuScreen() {
                         "Ethereum",
                         "Laucnhed in 2015 by Vitalik Buterin, Ethereum introduced smart contract functionality.",
                         R.drawable.ethereum_menu_other
+                    )
+                    CryptoCardInfo(
+                        "XRP",
+                        "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
+                        R.drawable.xrp_menu_other
+                    )
+                    CryptoCardInfo(
+                        "XRP",
+                        "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
+                        R.drawable.xrp_menu_other
                     )
                     CryptoCardInfo(
                         "XRP",
@@ -240,7 +260,6 @@ fun MenuScreen() {
                     }
                 }
 
-
             }
 
         }
@@ -254,27 +273,37 @@ fun CryptoCard(name: String, price: String, percentage: String, icon: Int) {
     Card(
         colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.size(width = 110.dp, 100.dp)
+        modifier = Modifier.size(width = 110.dp, height = 100.dp)
+
     ) {
         Column(
             modifier = Modifier
                 .padding(10.dp)
-                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+                ,
+            horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                     .padding(bottom = 10.dp)
-                    .fillMaxWidth()
+                    .align(Alignment.Start)
+
+
             ) {
                 Image(
                     painter = painterResource(icon),
                     contentDescription = "$name Icon",
                     modifier = Modifier
-                        .size(25.dp)
+                        .size(20.dp)
                         .clip(shape = CircleShape)
                 )
                 Spacer(modifier = Modifier.width(5.dp))
-                Text(text = name, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(
+                    text = name,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.horizontalScroll(ScrollState(0))
+                )
             }
             Text(text = price, color = Color.White)
             Text(text = percentage, color = Color.Green)
@@ -321,7 +350,7 @@ fun CryptoCardInfo(title: String, description: String, image: Int) {
 }
 
 
-@Preview(showSystemUi = true, device = "id:pixel_9")
+@Preview(showSystemUi = true, device = "id:Galaxy Nexus")
 @Composable
 private fun MenuScreenPreview() {
     MenuScreen();
