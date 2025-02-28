@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,11 +33,11 @@ import br.com.fiap.satoshi.ui.theme.Kotta
 import br.com.fiap.satoshi.ui.theme.Marhey
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen() {
 
     Box(
         modifier = Modifier
-            .background(color = Color(0xff131E2E))
+            .background(colorResource(id = R.color.background))
             .fillMaxSize()
     ) {
         Column(
@@ -57,7 +58,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.satoshi_news),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color(0xffF7931A),
+                color = colorResource(id = R.color.yellow_bitcoin),
                 modifier = Modifier.padding(bottom = 16.dp),
                 fontFamily = Marhey
             )
@@ -66,7 +67,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.connect_finances),
                 fontSize = 28.sp,
                 textAlign = TextAlign.Center,
-                color = Color(0xffF7931A),
+                color = colorResource(id = R.color.yellow_bitcoin),
                 modifier = Modifier.padding(top = 16.dp),
                 fontFamily = Kotta
             )
@@ -83,7 +84,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(R.string.lets_started),
                     fontSize = 16.sp,
-                    color = Color(0xffFFFFFF)
+                    color = colorResource(id = R.color.white)
                 )
             }
 
@@ -93,14 +94,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(R.string.already_account),
                     fontSize = 14.sp,
-                    color = Color(0xffFFFFFF)
+                    color = colorResource(id = R.color.white)
                 )
                 Spacer(
                     modifier = Modifier.width(4.dp)
                 )
                 Text(
                     text = stringResource(R.string.signin),
-                    color = Color(0xffF7931A),
+                    color = colorResource(id = R.color.yellow_bitcoin),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable { }
