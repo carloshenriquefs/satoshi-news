@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +46,7 @@ fun SignUpScreen() {
         ) {
             Image(
                 painter = painterResource(R.drawable.bitcoin),
-                contentDescription = "Bitcoin Logo",
+                contentDescription = stringResource(R.string.bitcoin_logo),
                 modifier = Modifier.size(140.dp)
             )
 
@@ -53,7 +54,7 @@ fun SignUpScreen() {
                 text = stringResource(R.string.sign_up),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = Color(0xffF7931A),
+                color = colorResource(id = R.color.yellow_bitcoin),
                 fontFamily = InterBold
             )
 
@@ -61,7 +62,7 @@ fun SignUpScreen() {
                 text = stringResource(R.string.please_signup),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color(0xffFFFFFF),
+                color = colorResource(id = R.color.white),
                 fontFamily = InterRegular
             )
 
@@ -78,7 +79,7 @@ fun SignUpScreen() {
                 Text(
                     text = stringResource(R.string.signup),
                     fontSize = 16.sp,
-                    color = Color(0xffFFFFFF)
+                    color = colorResource(id = R.color.white)
                 )
             }
 
@@ -87,7 +88,7 @@ fun SignUpScreen() {
                     text = stringResource(R.string.have_account),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xffFFFFFF),
+                    color = colorResource(id = R.color.white),
                     fontFamily = InterRegular
                 )
 
@@ -95,7 +96,7 @@ fun SignUpScreen() {
                     text = stringResource(R.string.login),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xffF7931A),
+                    color = colorResource(id = R.color.yellow_bitcoin),
                     fontFamily = InterRegular
                 )
             }

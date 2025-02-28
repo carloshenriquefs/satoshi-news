@@ -1,6 +1,7 @@
 package br.com.fiap.satoshi.components
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -46,15 +49,26 @@ class ComponentOutlinedTextField {
                     .height(50.dp),
                 singleLine = true,
                 label = {
-                    Text(text = stringResource(R.string.email))
+                    Text(
+                        text = stringResource(R.string.email),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.input_email))
+                    Text(
+                        text = stringResource(R.string.input_email),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
                     focusedBorderColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedBorderColor = Color.White
+
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
@@ -67,24 +81,39 @@ class ComponentOutlinedTextField {
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp),
+                textStyle = TextStyle(color = Color.White),
                 singleLine = true,
                 label = {
-                    Text(text = stringResource(R.string.password))
+                    Text(
+                        text = stringResource(R.string.password),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.input_password))
+                    Text(
+                        text = stringResource(R.string.input_password),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 trailingIcon = {
                     Icon(
+
                         painter = painterResource(id = R.drawable.eye),
-                        contentDescription = "ícone de senha",
+                        contentDescription = stringResource(R.string.icon_password),
                         Modifier.width(30.dp)
+                            .padding(end = 7.dp),
+                        tint = Color(255, 255, 255, 255),
                     )
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
                     focusedBorderColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedBorderColor = Color.White
+
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
@@ -114,15 +143,25 @@ class ComponentOutlinedTextField {
                     .height(50.dp),
                 singleLine = true,
                 label = {
-                    Text(text = stringResource(R.string.name))
+                    Text(
+                        text = stringResource(R.string.name),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.input_name))
+                    Text(
+                        text = stringResource(R.string.input_name),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
                     focusedBorderColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedBorderColor = Color.White
                 ),
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
             )
@@ -137,16 +176,25 @@ class ComponentOutlinedTextField {
                     .height(50.dp),
                 singleLine = true,
                 label = {
-                    Text(text = stringResource(R.string.email))
+                    Text(
+                        text = stringResource(R.string.email),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.input_email))
+                    Text(
+                        text = stringResource(R.string.input_email),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.White,
+                    focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
-                    focusedTextColor = Color.White
+                    focusedBorderColor = Color.White,
+                    unfocusedBorderColor = Color.White
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
@@ -161,15 +209,25 @@ class ComponentOutlinedTextField {
                     .height(50.dp),
                 singleLine = true,
                 label = {
-                    Text(text = stringResource(R.string.password))
+                    Text(
+                        text = stringResource(R.string.password),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 placeholder = {
-                    Text(text = stringResource(R.string.input_password))
+                    Text(
+                        text = stringResource(R.string.input_password),
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White
+                    )
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
                     focusedBorderColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedBorderColor = Color.White
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
