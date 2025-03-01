@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#ff131E2E</color>
     <color name="yellow_bitcoin">#ffF7931A</color>
+    <color name="primary">#131E2E</color>
+    <color name="secondary">#80040404</color>
 </resources>
