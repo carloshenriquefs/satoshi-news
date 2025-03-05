@@ -1,11 +1,5 @@
 package br.com.fiap.satoshi.screens
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,16 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -39,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Button
+import br.com.fiap.satoshi.components.Icons.Companion.FloatingCryptoIcons
 import br.com.fiap.satoshi.ui.theme.Kotta
 import br.com.fiap.satoshi.ui.theme.Marhey
 
@@ -51,7 +43,9 @@ fun HomeScreen() {
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        //BackgroundIcons()
+
+        FloatingCryptoIcons()
+
         Column(
             modifier = Modifier
                 .padding(20.dp)
@@ -68,7 +62,7 @@ fun HomeScreen() {
             Text(
                 text = stringResource(R.string.satoshi_news),
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Light,
                 color = colorResource(id = R.color.yellow_bitcoin),
                 modifier = Modifier.padding(bottom = 16.dp),
                 fontFamily = Marhey
@@ -142,37 +136,6 @@ fun HomeScreen() {
         }
     }
 }
-
-@Composable
-fun BackgroundIcons() {
-    val icons = listOf(
-        R.drawable.bitcoin,
-        R.drawable.binance,
-        R.drawable.xrp,
-        R.drawable.tron
-    )
-
-    icons.forEachIndexed { index, icon ->
-        val position by rememberInfiniteTransition().animateFloat(
-            initialValue = (-100).toFloat(),
-            targetValue = 100f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(3000 + (index * 500), easing = LinearEasing),
-                repeatMode = RepeatMode.Reverse
-            )
-        )
-
-        Image(
-            painter = painterResource(id = icon),
-            contentDescription = "Crypto Icon",
-            modifier = Modifier
-                .offset(x = position.dp, y = (index * 60).dp)
-                .size(50.dp)
-                .alpha(0.8f)
-        )
-    }
-}
-
 
 @Preview(showSystemUi = true)
 @Composable
