@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Back
+import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ComponentCardUser
-import br.com.fiap.satoshi.components.Menu
+import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.ui.theme.InterBold
 
 @Composable
@@ -42,7 +42,7 @@ fun NewsLetterScreen() {
                 .fillMaxWidth()
         ) {
 
-            Back.ComponentBack(
+            ComponentBack(
                 stringResource(R.string.back_icon)
             )
         }
@@ -127,7 +127,7 @@ fun NewsLetterScreen() {
         )
     }
 
-    Menu.ComponentMenu(
+    ComponentMenu(
         painterResource(R.drawable.left_icon_bottom_bar),
         painterResource(R.drawable.mid_icon_bottom_bar),
         painterResource(R.drawable.rigth_icon_bottom_bar)

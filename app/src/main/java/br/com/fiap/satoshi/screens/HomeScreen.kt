@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button
+import br.com.fiap.satoshi.components.Button.Companion.ComponentLetsGetStarted
 import br.com.fiap.satoshi.components.Icons.Companion.FloatingCryptoIcons
 import br.com.fiap.satoshi.ui.theme.Kotta
 import br.com.fiap.satoshi.ui.theme.Marhey
@@ -112,7 +112,7 @@ fun HomeScreen() {
                 }
             )
 
-            Button.ComponentLetsGetStarted()
+            ComponentLetsGetStarted()
 
             Row(
                 modifier = Modifier.padding(top = 16.dp)

@@ -28,8 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button
-import br.com.fiap.satoshi.components.OutlinedTextField
+import br.com.fiap.satoshi.components.Button.Companion.ComponentButtonLogin
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentLogin
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
@@ -74,7 +74,7 @@ fun LoginScreen() {
                 fontFamily = InterRegular
             )
 
-            OutlinedTextField.ComponentLogin(
+            ComponentLogin(
                 stringResource(R.string.email),
                 stringResource(R.string.password)
             )
@@ -104,7 +104,7 @@ fun LoginScreen() {
                 )
             }
 
-            Button.ComponentButtonLogin()
+            ComponentButtonLogin()
 
             Row() {
                 Text(

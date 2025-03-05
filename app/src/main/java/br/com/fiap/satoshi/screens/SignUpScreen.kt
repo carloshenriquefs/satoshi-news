@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button
-import br.com.fiap.satoshi.components.OutlinedTextField
+import br.com.fiap.satoshi.components.Button.Companion.ComponentButtonSignUp
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSignUp
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
@@ -64,13 +64,13 @@ fun SignUpScreen() {
                 fontFamily = InterRegular
             )
 
-            OutlinedTextField.ComponentSignUp(
+            ComponentSignUp(
                 stringResource(R.string.name),
                 stringResource(R.string.email),
                 stringResource(R.string.password)
             )
 
-            Button.ComponentButtonSignUp()
+            ComponentButtonSignUp()
 
             Row() {
                 Text(

@@ -30,9 +30,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Card
-import br.com.fiap.satoshi.components.Menu
-import br.com.fiap.satoshi.components.OutlinedTextField
+import br.com.fiap.satoshi.components.Card.Companion.ConvertCard
+import br.com.fiap.satoshi.components.Card.Companion.TopCryptoCard
+import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
 import br.com.fiap.satoshi.ui.theme.InterBold
 
 @Composable
@@ -68,7 +69,7 @@ fun ConversionScreen() {
                 }
             }
 
-            OutlinedTextField.ComponentSearch()
+            ComponentSearch()
 
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -88,22 +89,22 @@ fun ConversionScreen() {
 
                 Row() {
 
-                    Card.ConvertCard(R.drawable.binance, "Binance")
+                    ConvertCard(R.drawable.binance, "Binance")
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    Card.ConvertCard(R.drawable.money, "USD")
+                    ConvertCard(R.drawable.money, "USD")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Row() {
 
-                    Card.ConvertCard("1")
+                    ConvertCard("1")
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    Card.ConvertCard("2000")
+                    ConvertCard("2000")
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -123,7 +124,7 @@ fun ConversionScreen() {
                         .fillMaxSize()
                         .verticalScroll(ScrollState(0))
                 ) {
-                    Card.TopCryptoCard(
+                    TopCryptoCard(
                         R.drawable.bitcoin,
                         "Bitcoin",
                         "$27,130",
@@ -133,7 +134,7 @@ fun ConversionScreen() {
                         "BTC"
                     )
 
-                    Card.TopCryptoCard(
+                    TopCryptoCard(
                         R.drawable.binance,
                         "Binance",
                         "$27,130",
@@ -143,7 +144,7 @@ fun ConversionScreen() {
                         "BNC"
                     )
 
-                    Card.TopCryptoCard(
+                    TopCryptoCard(
                         R.drawable.xrp,
                         "XRP",
                         "$27,130",
@@ -153,7 +154,7 @@ fun ConversionScreen() {
                         "XRP"
                     )
 
-                    Card.TopCryptoCard(
+                    TopCryptoCard(
                         R.drawable.tether,
                         "Tether",
                         "$27,130",
@@ -163,7 +164,7 @@ fun ConversionScreen() {
                         "Teather"
                     )
 
-                    Card.TopCryptoCard(
+                    TopCryptoCard(
                         R.drawable.tron,
                         "Tron",
                         "$27,130",
@@ -177,7 +178,7 @@ fun ConversionScreen() {
         }
     }
 
-    Menu.ComponentMenu(
+    ComponentMenu(
         painterResource(R.drawable.left_icon_bottom_bar),
         painterResource(R.drawable.mid_icon_bottom_bar),
         painterResource(R.drawable.rigth_icon_bottom_bar)

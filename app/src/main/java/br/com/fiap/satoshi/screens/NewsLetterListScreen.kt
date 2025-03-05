@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back
-import br.com.fiap.satoshi.components.Card
-import br.com.fiap.satoshi.components.Menu
-import br.com.fiap.satoshi.components.OutlinedTextField
+import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
+import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
 import br.com.fiap.satoshi.ui.theme.InterBold
 
 @Composable
@@ -42,7 +42,7 @@ fun NewsLetterListScreen() {
                 stringResource(R.string.back_icon)
             )
 
-            OutlinedTextField.ComponentSearch()
+            ComponentSearch()
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -62,7 +62,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -70,7 +70,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -78,7 +78,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -86,7 +86,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -94,7 +94,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -102,7 +102,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -110,7 +110,7 @@ fun NewsLetterListScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Card.ComponentNewsLetter(
+                ComponentNewsLetter(
                     stringResource(R.string.alert),
                     stringResource(R.string.date),
                     stringResource(R.string.coin)
@@ -118,7 +118,7 @@ fun NewsLetterListScreen() {
             }
         }
 
-        Menu.ComponentMenu(
+        ComponentMenu(
             painterResource(R.drawable.left_icon_bottom_bar),
             painterResource(R.drawable.mid_icon_bottom_bar),
             painterResource(R.drawable.rigth_icon_bottom_bar)
