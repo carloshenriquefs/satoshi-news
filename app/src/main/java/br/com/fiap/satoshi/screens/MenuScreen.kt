@@ -164,9 +164,7 @@ fun MenuScreen() {
                 }
                 Row(
                     modifier = Modifier
-
-                        .horizontalScroll(ScrollState(0))
-                    ,
+                        .horizontalScroll(ScrollState(0)),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 )
                 {
@@ -178,22 +176,22 @@ fun MenuScreen() {
                     CryptoCardInfo(
                         "XRP",
                         "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
-                        R.drawable.xrp_menu_other
+                        R.drawable.xrp_coin
                     )
                     CryptoCardInfo(
                         "XRP",
                         "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
-                        R.drawable.xrp_menu_other
+                        R.drawable.xrp_coin
                     )
                     CryptoCardInfo(
                         "XRP",
                         "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
-                        R.drawable.xrp_menu_other
+                        R.drawable.xrp_coin
                     )
                     CryptoCardInfo(
                         "XRP",
                         "Unlike other cryptocurrencies, XRP is not mined; all coins were mined at lauch.",
-                        R.drawable.xrp_menu_other
+                        R.drawable.xrp_coin
                     )
                 }
             }

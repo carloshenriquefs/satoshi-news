@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
@@ -31,7 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.ComponentOutlinedTextField
+import br.com.fiap.satoshi.components.Button
+import br.com.fiap.satoshi.components.OutlinedTextField
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
@@ -76,7 +74,10 @@ fun LoginScreen() {
                 fontFamily = InterRegular
             )
 
-            ComponentOutlinedTextField.ComponentLogin()
+            OutlinedTextField.ComponentLogin(
+                stringResource(R.string.email),
+                stringResource(R.string.password)
+            )
 
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -103,20 +104,7 @@ fun LoginScreen() {
                 )
             }
 
-
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .size(width = 280.dp, height = 45.dp),
-                colors = ButtonDefaults.buttonColors(Color.Black),
-                shape = RoundedCornerShape(10.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.log_in),
-                    fontSize = 16.sp,
-                    color = colorResource(id = R.color.white)
-                )
-            }
+            Button.ComponentButtonLogin()
 
             Row() {
                 Text(
