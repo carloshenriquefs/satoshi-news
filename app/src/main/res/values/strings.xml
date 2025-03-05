@@ -42,4 +42,18 @@
     <string name="invest_consciously">Invista Consciente, Tranforme o Mundo 🌎💚</string>
     <string name="other_crypto">Other Crypto</string>
     <string name="see_all">See all</string>
+
+
+    <string name="back_icon">Back Icon</string>
+    <string name="convert_currency">Convert your Currency:</string>
+    <string name="binance">Binance</string>
+    <string name="USD">USD</string>
+    <string name="top_crypto">Top Crypto:</string>
+
+
+    <string name="newsletter">Newsletter List:</string>
+    <string name="alert">Alerta nova moeda sustentável</string>
+    <string name="coin">Conheça as novas moedas</string>
+    <string name="date">10/10/10</string>
+
 </resources>

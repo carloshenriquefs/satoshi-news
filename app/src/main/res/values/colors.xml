@@ -11,4 +11,5 @@
     <color name="yellow_bitcoin">#ffF7931A</color>
     <color name="primary">#131E2E</color>
     <color name="secondary">#80040404</color>
+    <color name="black_focus">#54000000</color>
 </resources>
