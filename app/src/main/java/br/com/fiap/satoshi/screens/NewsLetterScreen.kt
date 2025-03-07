@@ -121,16 +121,16 @@ fun NewsLetterScreen() {
         }
 
         ComponentCardUser(
-            painterResource(R.drawable.speacialist),
+            user = painterResource(R.drawable.speacialist),
             name = "Palmer Willians",
             text = "Mussum Ipsum, cacilds vidis litro abertis..."
         )
     }
 
     ComponentMenu(
-        painterResource(R.drawable.left_icon_bottom_bar),
-        painterResource(R.drawable.mid_icon_bottom_bar),
-        painterResource(R.drawable.rigth_icon_bottom_bar)
+        leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
+        midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
+        rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar)
     )
 }
 

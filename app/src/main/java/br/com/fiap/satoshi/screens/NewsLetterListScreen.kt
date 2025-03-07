@@ -20,10 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Back
+import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
+import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
-import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
 import br.com.fiap.satoshi.ui.theme.InterBold
 
 @Composable
@@ -38,11 +38,11 @@ fun NewsLetterListScreen() {
         Column(
             modifier = Modifier.padding(40.dp)
         ) {
-            Back.ComponentBack(
+            ComponentBack(
                 stringResource(R.string.back_icon)
             )
 
-            ComponentSearch()
+            ComponentSearch(label = stringResource(R.string.search))
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -63,65 +63,65 @@ fun NewsLetterListScreen() {
                 Spacer(modifier = Modifier.height(30.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentNewsLetter(
-                    stringResource(R.string.alert),
-                    stringResource(R.string.date),
-                    stringResource(R.string.coin)
+                    alert = stringResource(R.string.alert),
+                    date = stringResource(R.string.date),
+                    coin = stringResource(R.string.coin)
                 )
             }
         }
 
         ComponentMenu(
-            painterResource(R.drawable.left_icon_bottom_bar),
-            painterResource(R.drawable.mid_icon_bottom_bar),
-            painterResource(R.drawable.rigth_icon_bottom_bar)
+            leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
+            midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
+            rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar)
         )
     }
 }

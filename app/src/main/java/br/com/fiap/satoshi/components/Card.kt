@@ -3,6 +3,7 @@ package br.com.fiap.satoshi.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -95,23 +95,20 @@ class Card {
 
         @Composable
         fun ConvertCard(value: String) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.black_focus)),
-                shape = RoundedCornerShape(15.dp),
-                modifier = Modifier.size(width = 150.dp, height = 65.dp)
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(15.dp))
+                    .background(colorResource(R.color.black_focus))
+                    .size(width = 150.dp, height = 65.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text(
-                        text = value,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = InterBold,
-                        color = Color.White
-                    )
-                }
+                Text(
+                    text = value,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = InterBold,
+                    color = Color.White
+                )
             }
         }
 

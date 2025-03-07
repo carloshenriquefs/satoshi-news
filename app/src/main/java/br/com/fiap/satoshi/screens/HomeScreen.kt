@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button.Companion.ComponentLetsGetStarted
+import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
 import br.com.fiap.satoshi.components.Icons.Companion.FloatingCryptoIcons
 import br.com.fiap.satoshi.ui.theme.Kotta
 import br.com.fiap.satoshi.ui.theme.Marhey
@@ -61,58 +60,60 @@ fun HomeScreen() {
 
             Text(
                 text = stringResource(R.string.satoshi_news),
-                fontSize = 28.sp,
+                fontSize = 26.sp,
                 fontWeight = FontWeight.Light,
                 color = colorResource(id = R.color.yellow_bitcoin),
                 modifier = Modifier.padding(bottom = 16.dp),
                 fontFamily = Marhey
             )
-
+            
             Text(textAlign = TextAlign.Center,
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
-                            color = Color.White,
-                            fontSize = 28.sp,
+                            color = colorResource(id = R.color.white),
+                            fontSize = 26.sp,
                             fontFamily = Kotta
                         )
                     ) {
-                        append("Conectando você ao ")
+                        append("Connecting you to the ")
                     }
                     withStyle(
                         style = SpanStyle(
-                            color = Color(0xFFFF9800),
-                            fontSize = 28.sp,
+                            color = colorResource(id = R.color.yellow_bitcoin),
+                            fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = Kotta
                         )
                     ) {
-                        append("futuro ")
+                        append("future ")
                     }
                     withStyle(
                         style = SpanStyle(
-                            color = Color.White,
-                            fontSize = 28.sp,
+                            color = colorResource(id = R.color.white),
+                            fontSize = 26.sp,
                             fontFamily = Kotta
                         )
                     ) {
-                        append("das ")
+                        append("of ")
                     }
                     withStyle(
                         style = SpanStyle(
-                            color = Color(0xFFFF9800),
-                            fontSize = 28.sp,
+                            color = colorResource(id = R.color.yellow_bitcoin),
+                            fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = Kotta
                         )
                     ) {
-                        append("finanças!")
+                        append("finance!")
                     }
 
                 }
             )
 
-            ComponentLetsGetStarted()
+            ComponentButton(
+                label = stringResource(R.string.lets_started)
+            )
 
             Row(
                 modifier = Modifier.padding(top = 16.dp)

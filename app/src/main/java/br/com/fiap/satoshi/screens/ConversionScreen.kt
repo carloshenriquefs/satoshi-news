@@ -69,7 +69,7 @@ fun ConversionScreen() {
                 }
             }
 
-            ComponentSearch()
+            ComponentSearch(label = stringResource(R.string.search))
 
             Column(
                 modifier = Modifier.fillMaxWidth()
@@ -89,22 +89,29 @@ fun ConversionScreen() {
 
                 Row() {
 
-                    ConvertCard(R.drawable.binance, "Binance")
+                    ConvertCard(
+                        icon = R.drawable.binance,
+                        coin = "Binance"
+                    )
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    ConvertCard(R.drawable.money, "USD")
+                    ConvertCard(
+                        icon = R.drawable.money,
+                        coin = "USD"
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Row() {
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween) {
 
-                    ConvertCard("1")
+                    ConvertCard(value = "1")
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-                    ConvertCard("2000")
+                    ConvertCard(value = "2000")
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -125,53 +132,53 @@ fun ConversionScreen() {
                         .verticalScroll(ScrollState(0))
                 ) {
                     TopCryptoCard(
-                        R.drawable.bitcoin,
-                        "Bitcoin",
-                        "$27,130",
-                        "+2.35%",
-                        "$3,124.22",
-                        "0.1912343",
-                        "BTC"
+                        icon = R.drawable.bitcoin,
+                        name = "Bitcoin",
+                        valueDolar = "$27,130",
+                        priceChange = "+2.35%",
+                        price = "$3,124.22",
+                        amountOwned = "0.1912343",
+                        tickerSymbol = "BTC"
                     )
 
                     TopCryptoCard(
-                        R.drawable.binance,
-                        "Binance",
-                        "$27,130",
-                        "+2.35%",
-                        "$3,124.22",
-                        "0.1912343",
-                        "BNC"
+                        icon = R.drawable.binance,
+                        name = "Binance",
+                        valueDolar = "$27,130",
+                        priceChange = "+2.35%",
+                        price ="$3,124.22",
+                        amountOwned = "0.1912343",
+                        tickerSymbol = "BNC"
                     )
 
                     TopCryptoCard(
-                        R.drawable.xrp,
-                        "XRP",
-                        "$27,130",
-                        "+2.35%",
-                        "$3,124.22",
-                        "0.1912343",
-                        "XRP"
+                        icon = R.drawable.xrp,
+                        name = "XRP",
+                        valueDolar = "$27,130",
+                        priceChange = "+2.35%",
+                        price = "$3,124.22",
+                        amountOwned = "0.1912343",
+                        tickerSymbol = "XRP"
                     )
 
                     TopCryptoCard(
-                        R.drawable.tether,
-                        "Tether",
-                        "$27,130",
-                        "+2.35%",
-                        "$3,124.22",
-                        "0.1912343",
-                        "Teather"
+                        icon = R.drawable.tether,
+                        name = "Tether",
+                        valueDolar = "$27,130",
+                        priceChange = "+2.35%",
+                        price = "$3,124.22",
+                        amountOwned = "0.1912343",
+                        tickerSymbol = "Tether"
                     )
 
                     TopCryptoCard(
-                        R.drawable.tron,
-                        "Tron",
-                        "$27,130",
-                        "+2.35%",
-                        "$3,124.22",
-                        "0.1912343",
-                        "Tron"
+                        icon = R.drawable.tron,
+                        name = "Tron",
+                        valueDolar = "$27,130",
+                        priceChange = "+2.35%",
+                        price = "$3,124.22",
+                        amountOwned = "0.1912343",
+                        tickerSymbol = "Tron"
                     )
                 }
             }
@@ -179,9 +186,9 @@ fun ConversionScreen() {
     }
 
     ComponentMenu(
-        painterResource(R.drawable.left_icon_bottom_bar),
-        painterResource(R.drawable.mid_icon_bottom_bar),
-        painterResource(R.drawable.rigth_icon_bottom_bar)
+        leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
+        midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
+        rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar)
     )
 
 }

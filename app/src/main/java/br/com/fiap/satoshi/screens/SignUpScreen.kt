@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button.Companion.ComponentButtonSignUp
-import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSignUp
+import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInbox
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
@@ -64,13 +64,22 @@ fun SignUpScreen() {
                 fontFamily = InterRegular
             )
 
-            ComponentSignUp(
-                stringResource(R.string.name),
-                stringResource(R.string.email),
-                stringResource(R.string.password)
+            ComponentInbox(
+                label = stringResource(R.string.name),
+                placeholder = stringResource(R.string.input_name)
             )
 
-            ComponentButtonSignUp()
+            ComponentInbox(
+                label = stringResource(R.string.email),
+                placeholder = stringResource(R.string.input_email)
+            )
+
+            ComponentInbox(
+                label = stringResource(R.string.password),
+                placeholder = stringResource(R.string.input_password)
+            )
+
+            ComponentButton(stringResource(R.string.sign_up))
 
             Row() {
                 Text(
@@ -84,9 +93,9 @@ fun SignUpScreen() {
                 Text(
                     text = stringResource(R.string.login),
                     fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.yellow_bitcoin),
-                    fontFamily = InterRegular
+                    fontFamily = InterBold
                 )
             }
 
@@ -95,7 +104,6 @@ fun SignUpScreen() {
                 contentDescription = stringResource(R.string.google),
                 modifier = Modifier.size(20.dp)
             )
-
         }
     }
 }

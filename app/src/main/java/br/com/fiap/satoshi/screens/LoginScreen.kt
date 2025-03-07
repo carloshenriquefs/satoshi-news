@@ -28,8 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Button.Companion.ComponentButtonLogin
-import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentLogin
+import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInbox
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInboxPassword
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
@@ -74,9 +75,15 @@ fun LoginScreen() {
                 fontFamily = InterRegular
             )
 
-            ComponentLogin(
-                stringResource(R.string.email),
-                stringResource(R.string.password)
+            ComponentInbox(
+                label = stringResource(R.string.email),
+                placeholder = stringResource(R.string.input_email)
+            )
+
+            ComponentInboxPassword(
+                label = stringResource(R.string.password),
+                placeholder = stringResource(R.string.input_password),
+                icon = stringResource(R.string.icon_password)
             )
 
             Row(
@@ -104,7 +111,9 @@ fun LoginScreen() {
                 )
             }
 
-            ComponentButtonLogin()
+            ComponentButton(
+                stringResource(R.string.log_in)
+            )
 
             Row() {
                 Text(
@@ -118,9 +127,9 @@ fun LoginScreen() {
                 Text(
                     text = stringResource(R.string.signup),
                     fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.yellow_bitcoin),
-                    fontFamily = InterRegular
+                    fontFamily = InterBold
                 )
             }
 
