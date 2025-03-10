@@ -36,6 +36,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
@@ -334,7 +335,8 @@ class Card {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(10.dp),
+                        .padding(10.dp)
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(
@@ -371,7 +373,8 @@ class Card {
                 modifier = Modifier.size(width = 150.dp, height = 160.dp)
             ) {
 
-                Column(modifier = Modifier.padding(10.dp)
+                Column(modifier = Modifier
+                    .padding(10.dp)
                     .verticalScroll(ScrollState(0)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -397,3 +400,5 @@ class Card {
         }
     }
 }
+
+

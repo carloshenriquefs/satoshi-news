@@ -193,7 +193,7 @@ fun GraphsScreen() {
     }
 }
 
-@Preview(showSystemUi = true, device = "id:pixel_9")
+@Preview(showSystemUi = true)
 @Composable
 private fun GraphScreenPreview() {
     GraphsScreen()

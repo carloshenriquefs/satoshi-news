@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -43,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCard
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
+import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
+
 
 @Composable
 fun MenuScreen() {
@@ -62,7 +63,8 @@ fun MenuScreen() {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
 
                 Row(
@@ -196,7 +198,7 @@ fun MenuScreen() {
             }
 
             Column(
-                modifier = Modifier.fillMaxHeight(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -223,41 +225,17 @@ fun MenuScreen() {
                     Text(text = stringResource(R.string.invest_consciously), color = Color.White)
                 }
 
-                Card(
-                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-                    colors = CardDefaults.cardColors(colorResource(R.color.secondary)),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(7.dp)
-                    ) {
-
-                        Image(
-                            painter = painterResource(R.drawable.left_icon_bottom_bar),
-                            contentDescription = "Dashboard icon",
-                            modifier = Modifier.size(40.dp).clickable {  }
-                        )
-                        Image(
-                            painter = painterResource(R.drawable.mid_icon_bottom_bar),
-                            contentDescription = "Bitcoin Icon",
-                            modifier = Modifier.size(40.dp).clickable {  }
-                        )
-                        Image(
-                            painter = painterResource(R.drawable.rigth_icon_bottom_bar),
-                            contentDescription = "Conversion Icon",
-                            modifier = Modifier.size(40.dp).clickable {  }
-                        )
-                    }
-                }
+                ComponentMenu(
+                    leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
+                    midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
+                    rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar)
+                )
             }
         }
     }
 }
 
-@Preview(showSystemUi = true, device = "id:pixel_9")
+@Preview(showSystemUi = true)
 @Composable
 private fun MenuScreenPreview() {
     MenuScreen()
