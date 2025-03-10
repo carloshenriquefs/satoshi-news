@@ -1,7 +1,9 @@
 package br.com.fiap.satoshi.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
@@ -320,6 +323,77 @@ class Card {
                     }
                 }
             }
+        }
+
+        @Composable
+        fun CryptoCard(name: String, price: String, percentage: String, icon: Int) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.size(width = 110.dp, height = 100.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                            .padding(bottom = 10.dp)
+                            .align(Alignment.Start)
+                    ) {
+                        Image(
+                            painter = painterResource(icon),
+                            contentDescription = "$name Icon",
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clip(shape = CircleShape)
+                        )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = name,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.horizontalScroll(ScrollState(0))
+                        )
+                    }
+                    Text(text = price, color = Color.White)
+                    Text(text = percentage, color = Color.Green)
+                }
+            }
+        }
+
+        @Composable
+        fun CryptoCardInfo(title: String, description: String, image: Int) {
+
+            Card(
+                colors = CardDefaults.cardColors(colorResource(R.color.secondary)),
+                modifier = Modifier.size(width = 150.dp, height = 160.dp)
+            ) {
+
+                Column(modifier = Modifier.padding(10.dp)
+                    .verticalScroll(ScrollState(0)),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(image),
+                        contentDescription = "Ethereum Image"
+                    )
+
+                    Text(
+                        text = title,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                    Text(
+                        text = description,
+                        color = Color.White
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.width(30.dp))
+
         }
     }
 }

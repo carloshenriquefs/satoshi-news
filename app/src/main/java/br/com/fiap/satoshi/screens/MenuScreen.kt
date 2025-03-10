@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -33,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -44,6 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
+import br.com.fiap.satoshi.components.Card.Companion.CryptoCard
+import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
 
 @Composable
 fun MenuScreen() {
@@ -258,79 +257,7 @@ fun MenuScreen() {
     }
 }
 
-@Composable
-fun CryptoCard(name: String, price: String, percentage: String, icon: Int) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
-        shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.size(width = 110.dp, height = 100.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .align(Alignment.Start)
-            ) {
-                Image(
-                    painter = painterResource(icon),
-                    contentDescription = "$name Icon",
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clip(shape = CircleShape)
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(
-                    text = name,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.horizontalScroll(ScrollState(0))
-                )
-            }
-            Text(text = price, color = Color.White)
-            Text(text = percentage, color = Color.Green)
-        }
-    }
-}
-
-@Composable
-fun CryptoCardInfo(title: String, description: String, image: Int) {
-
-    Card(
-        colors = CardDefaults.cardColors(colorResource(R.color.secondary)),
-        modifier = Modifier.size(width = 150.dp, height = 160.dp)
-    ) {
-
-        Column(modifier = Modifier.padding(10.dp)
-            .verticalScroll(ScrollState(0)),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(image),
-                contentDescription = "Ethereum Image"
-            )
-
-            Text(
-                text = title,
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.Start)
-            )
-            Text(
-                text = description,
-                color = Color.White
-            )
-        }
-    }
-    Spacer(modifier = Modifier.width(30.dp))
-
-}
-
-
-@Preview(showSystemUi = true, device = "id:Galaxy Nexus")
+@Preview(showSystemUi = true, device = "id:pixel_9")
 @Composable
 private fun MenuScreenPreview() {
     MenuScreen()

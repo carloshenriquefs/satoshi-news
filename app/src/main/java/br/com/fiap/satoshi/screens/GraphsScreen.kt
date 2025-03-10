@@ -33,9 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Back
-import br.com.fiap.satoshi.components.Graphs
-import br.com.fiap.satoshi.components.OutlinedTextField
+import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
+import br.com.fiap.satoshi.components.Graphs.Companion.CircularProgressBar
+import br.com.fiap.satoshi.components.Graphs.Companion.LineGraph
+import br.com.fiap.satoshi.components.Graphs.Companion.MiniLineGraph
+import br.com.fiap.satoshi.components.Graphs.Companion.ProgressBar
+import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
 
 
 @Composable
@@ -62,13 +65,12 @@ fun GraphsScreen() {
                     .padding(top = 25.dp)
             ) {
 
-                Back.ComponentBack(
+                ComponentBack(
                     stringResource(R.string.back_icon)
                 )
-
             }
 
-            OutlinedTextField.ComponentSearch()
+            ComponentSearch(label = stringResource(R.string.search))
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -88,7 +90,7 @@ fun GraphsScreen() {
                             painter = painterResource(R.drawable.bitcoin),
                             contentDescription = "Coin Logo",
                             modifier = Modifier
-                                .size(50.dp)
+                                .size(60.dp)
                                 .padding(5.dp)
                         )
                     }
@@ -106,11 +108,8 @@ fun GraphsScreen() {
                             .width(140.dp)
                     )
                     {
-
-
-                        Graphs.ProgressBar("Category", 0.3f, showPercent = false)
+                        ProgressBar("Category", 0.3f, showPercent = false)
                         Text(text = "7.2h of 8h", color = Color.LightGray, fontSize = 13.sp)
-
                     }
                 }
 
@@ -122,11 +121,9 @@ fun GraphsScreen() {
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
 
-                        Graphs.MiniLineGraph()
+                        MiniLineGraph()
                     }
                 }
-
-
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -153,7 +150,7 @@ fun GraphsScreen() {
                         Text(text = "XX Of Total XX", color = Color.LightGray, fontSize = 13.sp)
                     }
 
-                    Graphs.CircularProgressBar(0.2f, modifier = Modifier.size(100.dp))
+                    CircularProgressBar(0.2f, modifier = Modifier.size(100.dp))
                 }
             }
 
@@ -177,9 +174,7 @@ fun GraphsScreen() {
                         fontSize = 18.sp
                     )
 
-                    Graphs.LineGraph(modifier = Modifier.size(300.dp))
-
-
+                    LineGraph(modifier = Modifier.size(300.dp))
                 }
             }
 
@@ -191,15 +186,12 @@ fun GraphsScreen() {
             ) {
 
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.height(100.dp)) {
-                    Graphs.ProgressBar("Challenge1", 0.35f)
+                    ProgressBar("Challenge1", 0.35f)
                 }
             }
-
         }
     }
-
 }
-
 
 @Preview(showSystemUi = true, device = "id:pixel_9")
 @Composable

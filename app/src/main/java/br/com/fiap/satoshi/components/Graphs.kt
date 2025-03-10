@@ -2,25 +2,36 @@ package br.com.fiap.satoshi.components
 
 import android.graphics.Typeface
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import br.com.fiap.satoshi.R
+import br.com.fiap.satoshi.components.Graphs.Companion.MiniLineGraph
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -88,8 +99,6 @@ class Graphs {
                     )
                 }
             }
-
-
         }
 
         @Composable
@@ -147,13 +156,9 @@ class Graphs {
                     LineChart(ctx).apply {
                         description.isEnabled = false
                         setTouchEnabled(true)
-//                        setVisibleXRangeMaximum(30f)
-//                        moveViewToX(20f)
-//                        scrollX = 50
                         setPinchZoom(true)
                         setBackgroundColor(resources.getColor(R.color.secondary))
                         legend.isEnabled = false
-
 
                         xAxis.apply {
                             position = XAxis.XAxisPosition.BOTTOM
@@ -172,10 +177,9 @@ class Graphs {
                                 "MAY",
                                 "JUN",
 
-                            )
+                                )
                         )
                         xAxis.granularity = 1f
-
 
                         axisLeft.apply {
                             setDrawGridLines(true)
@@ -200,7 +204,6 @@ class Graphs {
                             Entry(9f, 50f),
                             Entry(10f, 50f),
                             Entry(11f, 50f)
-
                         )
 
                         val entries2 = listOf(
@@ -263,8 +266,6 @@ class Graphs {
                 modifier = Modifier
                     .size(100.dp, 80.dp),
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary))
-
-
             ) {
                 Column(
                     modifier = Modifier.padding(8.dp),
@@ -283,7 +284,6 @@ class Graphs {
                         fontSize = 10.sp
                     )
 
-
                     AndroidView(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -298,7 +298,6 @@ class Graphs {
                                 xAxis.isEnabled = false
                                 description.isEnabled = false
                                 legend.isEnabled = false
-
 
                                 val entries = listOf(
                                     Entry(0f, 20f), Entry(1f, 50f), Entry(2f, 30f),
@@ -325,12 +324,10 @@ class Graphs {
             }
         }
     }
-
-    @Preview(showSystemUi = true)
-    @Composable
-    private fun GraphsPreview() {
-
-        MiniLineGraph()
-    }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+private fun GraphsPreview() {
+    MiniLineGraph()
+}
