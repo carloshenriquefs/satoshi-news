@@ -18,9 +18,9 @@ class Button {
     companion object {
 
         @Composable
-        fun ComponentButton(label: String) {
+        fun ComponentButton(label: String, onClick: () -> Unit) {
             Button(
-                onClick = {},
+                onClick = { onClick() },
                 modifier = Modifier
                     .size(width = 280.dp, height = 45.dp),
                 colors = ButtonDefaults.buttonColors(Color.Black),

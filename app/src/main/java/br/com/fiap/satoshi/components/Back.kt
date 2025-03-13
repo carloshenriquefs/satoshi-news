@@ -1,6 +1,7 @@
 package br.com.fiap.satoshi.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -23,12 +24,16 @@ class Back {
     companion object {
 
         @Composable
-        fun ComponentBack(icon: String) {
+        fun ComponentBack(
+            icon: String,
+            onClick: () -> Unit
+        ) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .size(30.dp)
+                    .clickable { onClick() }
             ) {
                 Column(
                     modifier = Modifier.padding(5.dp),
