@@ -402,7 +402,7 @@ class Card {
                 ) {
                     Image(
                         painter = painterResource(image),
-                        contentDescription = "Ethereum Image",
+                        contentDescription = "$image Image",
                         modifier = Modifier
                             .clickable {
                                 onClick()

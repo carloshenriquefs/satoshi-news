@@ -80,7 +80,7 @@ fun HomeScreen(navController: NavController) {
                         modifier = Modifier.size(30.dp)
                     ) {
                         Image(painter = painterResource(R.drawable.notification_icon),
-                            contentDescription = "Notification Icon",
+                            contentDescription = stringResource(R.string.notification_icon),
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(5.dp)
@@ -99,7 +99,7 @@ fun HomeScreen(navController: NavController) {
                         .padding(bottom = 25.dp)
                 ) {
                     Text(
-                        text = "Top 3 Cryptos",
+                        text = stringResource(R.string.top_three_cryptos),
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White,
                         fontSize = 15.sp
@@ -133,7 +133,7 @@ fun HomeScreen(navController: NavController) {
 
                 Image(
                     painter = painterResource(R.drawable.btc_news),
-                    contentDescription = "Bitcoin News Image",
+                    contentDescription = stringResource(R.string.crypto_news),
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
