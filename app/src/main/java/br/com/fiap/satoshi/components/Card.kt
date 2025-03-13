@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
+import coil.compose.AsyncImage
 
 class Card {
 
@@ -327,7 +328,7 @@ class Card {
         }
 
         @Composable
-        fun CryptoCard(name: String, price: String, percentage: String, icon: Int) {
+        fun CryptoCard(name: String, price: String, percentage: String, icon: String) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
                 shape = RoundedCornerShape(10.dp),
@@ -344,8 +345,8 @@ class Card {
                             .padding(bottom = 10.dp)
                             .align(Alignment.Start)
                     ) {
-                        Image(
-                            painter = painterResource(icon),
+                        AsyncImage(
+                            model = icon,
                             contentDescription = "$name Icon",
                             modifier = Modifier
                                 .size(20.dp)
