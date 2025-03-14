@@ -2,6 +2,7 @@ package br.com.fiap.satoshi.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +25,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInbox
@@ -35,7 +36,7 @@ import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
 
     var password = remember {
         mutableStateOf(true)
@@ -112,7 +113,8 @@ fun LoginScreen() {
             }
 
             ComponentButton(
-                stringResource(R.string.log_in)
+                label = stringResource(R.string.log_in),
+                onClick = { navController.navigate("home")}
             )
 
             Row() {
@@ -129,7 +131,10 @@ fun LoginScreen() {
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.yellow_bitcoin),
-                    fontFamily = InterBold
+                    fontFamily = InterBold,
+                    modifier = Modifier.clickable {
+                        navController.navigate("signup")
+                    }
                 )
             }
 
@@ -143,8 +148,8 @@ fun LoginScreen() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-private fun LoginScreenPreview() {
-    LoginScreen()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//private fun LoginScreenPreview() {
+//    LoginScreen()
+//}

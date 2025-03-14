@@ -27,7 +27,14 @@ class Menu {
     companion object {
 
         @Composable
-        fun ComponentMenu(leftIcon: Painter, midIcon: Painter, rightIcon: Painter) {
+        fun ComponentMenu(
+            leftIcon: Painter,
+            midIcon: Painter,
+            rightIcon: Painter,
+            onLeftClick: () -> Unit,
+            onMidClick: () -> Unit,
+            onRightClick: () -> Unit,
+        ) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -51,21 +58,21 @@ class Menu {
                             contentDescription = "Dashboard icon",
                             modifier = Modifier
                                 .size(40.dp)
-                                .clickable { }
+                                .clickable { onLeftClick() }
                         )
                         Image(
                             painter = midIcon,
                             contentDescription = "Bitcoin Icon",
                             modifier = Modifier
                                 .size(40.dp)
-                                .clickable { }
+                                .clickable { onMidClick() }
                         )
                         Image(
                             painter = rightIcon,
                             contentDescription = "Conversion Icon",
                             modifier = Modifier
                                 .size(40.dp)
-                                .clickable { }
+                                .clickable { onRightClick() }
                         )
                     }
                 }

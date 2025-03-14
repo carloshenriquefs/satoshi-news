@@ -23,54 +23,60 @@ class Icons {
                     contentDescription = "Binance Icon",
                     modifier = Modifier
                         .size(50.dp)
-                        .absoluteOffset(x = 190.dp, y = 16.dp)
+                        .absoluteOffset(x = 195.dp, y = 16.dp)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.tron),
                     contentDescription = "Tron Icon",
                     modifier = Modifier
                         .size(55.dp)
-                        .absoluteOffset(x = -185.dp, y = -20.dp)
+                        .absoluteOffset(x = -195.dp, y = -20.dp)
                         .align(Alignment.TopEnd)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.doge),
                     contentDescription = "Doge Icon",
                     modifier = Modifier
                         .size(55.dp)
-                        .absoluteOffset(x = 190.dp, y = -130.dp)
+                        .absoluteOffset(x = 195.dp, y = -130.dp)
                         .align(Alignment.BottomStart)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.xrp),
                     contentDescription = "XRP Icon",
                     modifier = Modifier
                         .size(55.dp)
-                        .absoluteOffset(x = -185.dp, y = -180.dp)
+                        .absoluteOffset(x = -195.dp, y = -180.dp)
                         .align(Alignment.BottomEnd)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.chainlink),
                     contentDescription = "Chainlink Icon",
                     modifier = Modifier
                         .size(60.dp)
-                        .absoluteOffset(x = 186.dp, y = -300.dp)
+                        .absoluteOffset(x = 196.dp, y = -300.dp)
                         .align(Alignment.BottomStart)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.ethereum),
                     contentDescription = "Ethereum Icon",
                     modifier = Modifier
                         .size(50.dp)
-                        .absoluteOffset(x = -190.dp, y = -350.dp)
+                        .absoluteOffset(x = -200.dp, y = -350.dp)
                         .align(Alignment.BottomEnd)
                 )
+
                 Image(
                     painter = painterResource(id = R.drawable.tether),
                     contentDescription = "Tether Icon",
                     modifier = Modifier
                         .size(55.dp)
-                        .absoluteOffset(x = 1.dp, y = -410.dp)
+                        .absoluteOffset(x = 1.dp, y = -440.dp)
                         .align(Alignment.TopEnd)
                 )
             }

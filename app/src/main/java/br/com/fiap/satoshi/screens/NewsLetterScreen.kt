@@ -18,9 +18,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ComponentCardUser
@@ -28,7 +28,7 @@ import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.ui.theme.InterBold
 
 @Composable
-fun NewsLetterScreen() {
+fun NewsLetterScreen(navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -43,7 +43,12 @@ fun NewsLetterScreen() {
         ) {
 
             ComponentBack(
-                stringResource(R.string.back_icon)
+                stringResource(R.string.back_icon),
+                onClick = {
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                }
             )
         }
 
@@ -130,12 +135,15 @@ fun NewsLetterScreen() {
     ComponentMenu(
         leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
         midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
-        rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar)
+        rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar),
+        onLeftClick = { navController.navigate("alerts") },
+        onMidClick = { navController.navigate("home") },
+        onRightClick = { navController.navigate("conversion") }
     )
 }
 
-@Preview(showSystemUi = true)
-@Composable
-private fun NewsLetterScreenPreview() {
-    NewsLetterScreen()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//private fun NewsLetterScreenPreview() {
+//    NewsLetterScreen()
+//}

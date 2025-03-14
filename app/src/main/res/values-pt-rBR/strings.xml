@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">satoshi</string>
+
+    <string name="bitcoin_logo">Bitcoin Logo</string>
+    <string name="satoshi_news">SatoshiNews</string>
+    <string name="connect_finances">Conectando você ao futuro\ndas finanças !</string>
+    <string name="lets_started">Vamos Começar</string>
+    <string name="already_account">Já tem conta ?</string>
+    <string name="signin">Cadastre-se</string>
+
+
+    <string name="log_in_now">Log In Now</string>
+    <string name="please_login">Por favor logue para continuar usando nosso aplicativo</string>
+
+    <string name="email">E-mail:</string>
+    <string name="input_email">Digite seu e-mail:</string>
+
+    <string name="password">Senha:</string>
+    <string name="input_password">Digite sua senha:</string>
+    <string name="icon_password">Ícone de Senha</string>
+
+    <string name="forgot_password">Esqueceu a senha ?</string>
+    <string name="log_in">Log In</string>
+    <string name="dont_account">Não tem uma conta ? </string>
+    <string name="signup"> Inscreva-se</string>
+
+    <string name="google"> Google Logo</string>
+
+
+    <string name="sign_up">Inscreva-se agora</string>
+    <string name="please_signup">Por favor cadastre-se para continuar usando nosso aplicativo</string>
+    <string name="name">Nome:</string>
+    <string name="input_name">Digite seu nome:</string>
+    <string name="login">Log In</string>
+    <string name="have_account">Já tem uma conta ?</string>
+
+    <string name="search">Pesquisar</string>
+
+    <string name="notification_icon">Notification Icon</string>
+    <string name="top_three_cryptos">Top 3 Cryptos</string>
+    <string name="crypto_news">Crypto News Image</string>
+    <string name="green_crypto">Crypto Verde</string>
+    <string name="sustainable_future">O Futuro Sustentável das</string>
+    <string name="coins">Moedas!</string>
+    <string name="invest_consciously">Invista Consciente, Tranforme o Mundo 🌎💚</string>
+    <string name="other_crypto">Outros Crypto</string>
+    <string name="see_all">Ver tudo</string>
+
+
+    <string name="back_icon">Back Icon</string>
+    <string name="convert_currency">Converta sua Moeda:</string>
+    <string name="binance">Binance</string>
+    <string name="USD">USD</string>
+    <string name="top_crypto">Top Crypto:</string>
+
+
+    <string name="newsletter">Newsletter List:</string>
+    <string name="alert">Alerta nova moeda sustentável</string>
+    <string name="coin">Conheça as novas moedas</string>
+    <string name="date">10/10/10</string>
+
+    <string name="category">Categoria</string>
+    <string name="challenge">Desafio 01</string>
+    <string name="chart_title">O título do gráfico vai aqui</string>
+
+</resources>

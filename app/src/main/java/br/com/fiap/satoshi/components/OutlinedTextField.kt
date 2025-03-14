@@ -44,8 +44,7 @@ class OutlinedTextField {
                     labelField = letra
                 },
                 modifier = Modifier
-                    .width(280.dp)
-                    .height(50.dp),
+                    .width(280.dp),
                 singleLine = true,
                 label = {
                     Text(
@@ -85,8 +84,7 @@ class OutlinedTextField {
                     labelField = letra
                 },
                 modifier = Modifier
-                    .width(280.dp)
-                    .height(50.dp),
+                    .width(280.dp),
                 singleLine = true,
                 label = {
                     Text(

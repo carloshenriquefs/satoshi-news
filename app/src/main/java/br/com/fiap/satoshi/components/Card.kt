@@ -3,6 +3,7 @@ package br.com.fiap.satoshi.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -214,12 +215,19 @@ class Card {
         }
 
         @Composable
-        fun ComponentNewsLetter(alert: String, date: String, coin: String) {
+        fun ComponentNewsLetter(
+            alert: String,
+            date: String,
+            coin: String,
+            onClick: () -> Unit
+        ) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.black_focus)),
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
-                    .size(width = 310.dp, height = 65.dp)
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+                    .clickable { onClick() }
             ) {
 
                 Column(
@@ -328,16 +336,23 @@ class Card {
         }
 
         @Composable
-        fun CryptoCard(name: String, price: String, percentage: String, icon: String) {
+        fun CryptoCard(
+            name: String,
+            price: String,
+            percentage: String,
+            icon: String,
+            onClick: () -> Unit
+        ) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.size(width = 110.dp, height = 100.dp)
+                modifier = Modifier
+                    .size(width = 110.dp, height = 100.dp)
+                    .clickable { onClick() }
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(10.dp)
-                        .fillMaxWidth(),
+                        .padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(
@@ -367,21 +382,33 @@ class Card {
         }
 
         @Composable
-        fun CryptoCardInfo(title: String, description: String, image: Int) {
+        fun CryptoCardInfo(
+            title: String,
+            description: String,
+            image: Int,
+            onClick: () -> Unit
+        ) {
 
             Card(
                 colors = CardDefaults.cardColors(colorResource(R.color.secondary)),
-                modifier = Modifier.size(width = 150.dp, height = 160.dp)
+                modifier = Modifier
+                    .size(width = 150.dp, height = 160.dp)
+                    .clickable { onClick() }
             ) {
 
-                Column(modifier = Modifier
-                    .padding(10.dp)
-                    .verticalScroll(ScrollState(0)),
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .verticalScroll(ScrollState(0)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
                         painter = painterResource(image),
-                        contentDescription = "Ethereum Image"
+                        contentDescription = "$image Image",
+                        modifier = Modifier
+                            .clickable {
+                                onClick()
+                            }
                     )
 
                     Text(
@@ -401,5 +428,3 @@ class Card {
         }
     }
 }
-
-

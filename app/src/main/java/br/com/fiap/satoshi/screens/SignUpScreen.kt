@@ -2,6 +2,7 @@ package br.com.fiap.satoshi.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +19,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInbox
@@ -28,7 +29,7 @@ import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
 
     Box(
         modifier = Modifier
@@ -79,7 +80,11 @@ fun SignUpScreen() {
                 placeholder = stringResource(R.string.input_password)
             )
 
-            ComponentButton(stringResource(R.string.sign_up))
+            ComponentButton(
+                label = stringResource(R.string.sign_up),
+                onClick = { navController.navigate("login") }
+
+            )
 
             Row() {
                 Text(
@@ -95,7 +100,10 @@ fun SignUpScreen() {
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.yellow_bitcoin),
-                    fontFamily = InterBold
+                    fontFamily = InterBold,
+                    modifier = Modifier.clickable {
+                        navController.navigate("login")
+                    }
                 )
             }
 
@@ -108,8 +116,8 @@ fun SignUpScreen() {
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-private fun SignUpScreenPreview() {
-    SignUpScreen()
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//private fun SignUpScreenPreview() {
+//    SignUpScreen()
+//}

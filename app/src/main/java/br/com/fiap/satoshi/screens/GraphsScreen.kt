@@ -29,20 +29,20 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Graphs.Companion.CircularProgressBar
 import br.com.fiap.satoshi.components.Graphs.Companion.LineGraph
 import br.com.fiap.satoshi.components.Graphs.Companion.MiniLineGraph
 import br.com.fiap.satoshi.components.Graphs.Companion.ProgressBar
-import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
+import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 
 
 @Composable
-fun GraphsScreen() {
+fun GraphsScreen(navController: NavController) {
 
     Box(
         modifier = Modifier
@@ -66,11 +66,14 @@ fun GraphsScreen() {
             ) {
 
                 ComponentBack(
-                    stringResource(R.string.back_icon)
+                    stringResource(R.string.back_icon),
+                    onClick = {
+                        if (navController.previousBackStackEntry != null) {
+                            navController.popBackStack()
+                        }
+                    }
                 )
             }
-
-            ComponentSearch(label = stringResource(R.string.search))
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -191,10 +194,19 @@ fun GraphsScreen() {
             }
         }
     }
+
+    ComponentMenu(
+        leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
+        midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
+        rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar),
+        onLeftClick = { navController.navigate("alerts") },
+        onMidClick = { navController.navigate("home") },
+        onRightClick = { navController.navigate("conversion") }
+    )
 }
 
-@Preview(showSystemUi = true)
-@Composable
-private fun GraphScreenPreview() {
-    GraphsScreen()
-}
+//@Preview(showSystemUi = true, device = "id:pixel_9")
+//@Composable
+//private fun GraphScreenPreview() {
+//    GraphsScreen()
+//}

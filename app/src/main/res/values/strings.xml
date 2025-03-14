@@ -3,7 +3,7 @@
 
     <string name="bitcoin_logo">Bitcoin Logo</string>
     <string name="satoshi_news">SatoshiNews</string>
-    <string name="connect_finances">Conectando você ao futuro\ndas finanças !</string>
+    <string name="connect_finances">Connecting you to the future of finance !</string>
     <string name="lets_started">Let\'s Get Started</string>
     <string name="already_account">Already have account ?</string>
     <string name="signin">Sign In</string>
@@ -17,7 +17,7 @@
 
     <string name="password">Password:</string>
     <string name="input_password">Enter your password:</string>
-    <string name="icon_password">Ícone de Senha</string>
+    <string name="icon_password">Password icon</string>
 
     <string name="forgot_password">Forgot Password ?</string>
     <string name="log_in">Log In</string>
@@ -34,12 +34,16 @@
     <string name="login">Log In</string>
     <string name="have_account">Already have an account ?</string>
 
-    <string name="search">Search</string>
+    <string name="search">Enter your cryptocurrency:</string>
 
-    <string name="green_crypto">Crypto Verde</string>
-    <string name="sustainable_future">O Futuro Sustentável das</string>
-    <string name="coins">Moedas!</string>
-    <string name="invest_consciously">Invista Consciente, Tranforme o Mundo 🌎💚</string>
+
+    <string name="notification_icon">Notification Icon</string>
+    <string name="top_three_cryptos">Top 3 Cryptos</string>
+    <string name="crypto_news">Crypto News Image</string>
+    <string name="green_crypto">Crypto Green</string>
+    <string name="sustainable_future">The sustainable future of </string>
+    <string name="coins">Currencies!</string>
+    <string name="invest_consciously">Invest, consciously, transform the world 🌎💚</string>
     <string name="other_crypto">Other Crypto</string>
     <string name="see_all">See all</string>
 
@@ -52,14 +56,12 @@
 
 
     <string name="newsletter">Newsletter List:</string>
-    <string name="alert">Alerta nova moeda sustentável</string>
-    <string name="coin">Conheça as novas moedas</string>
+    <string name="alert">New sustainable currency alert</string>
+    <string name="coin">Meet the new currencies</string>
     <string name="date">10/10/10</string>
 
     <string name="category">Category</string>
     <string name="challenge">Challenge 01</string>
     <string name="chart_title">Chart Title Goes Here</string>
-
-
 
 </resources>
