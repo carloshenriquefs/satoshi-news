@@ -37,11 +37,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
+import coil.compose.AsyncImage
 
 class Card {
 
@@ -338,7 +340,7 @@ class Card {
             name: String,
             price: String,
             percentage: String,
-            icon: Int,
+            icon: String,
             onClick: () -> Unit
         ) {
             Card(
@@ -358,8 +360,8 @@ class Card {
                             .padding(bottom = 10.dp)
                             .align(Alignment.Start)
                     ) {
-                        Image(
-                            painter = painterResource(icon),
+                        AsyncImage(
+                            model = icon,
                             contentDescription = "$name Icon",
                             modifier = Modifier
                                 .size(20.dp)
@@ -422,6 +424,7 @@ class Card {
                 }
             }
             Spacer(modifier = Modifier.width(30.dp))
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -41,6 +44,12 @@ import br.com.fiap.satoshi.components.Card.Companion.CryptoCard
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
+import br.com.fiap.satoshi.factory.RetrofitFactory
+import br.com.fiap.satoshi.model.CryptoProfitable
+import br.com.fiap.satoshi.model.DataProfitable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -50,6 +59,25 @@ fun HomeScreen(navController: NavController) {
         mutableStateOf(value = "")
 
     }
+
+    var cryptoTopThree by remember {
+
+        mutableStateOf(listOf<CryptoProfitable>())
+    }
+
+    val getCryptoTopThree = RetrofitFactory()
+        .getCryptoService()
+        .getTopProfitable(token = "Barear "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDE4Njc4MTMsImV4cCI6MTc0MTg3MTQxM30.4sbEIpUTD8KN1Vx_PHkpm-rm59zqkl5fxx0hx3_bbsE")
+
+    getCryptoTopThree.enqueue(object: Callback<DataProfitable> {
+        override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
+            cryptoTopThree = resultado.body()!!.data!!.subList(0,3)
+        }
+
+        override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
+            Log.i("API ERROR","Falha de Authenticação: ${p1.message}")
+        }
+    })
 
     Box(
         modifier = Modifier
@@ -106,27 +134,17 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CryptoCard(name = "Bitcoin",
-                        price = "$27,130",
-                        percentage = "+2.35%",
-                        R.drawable.bitcoin,
-                        onClick = { navController.navigate("graphs") })
-
-                    CryptoCard(name = "Ethereum",
-                        price = "$1,920",
-                        percentage = "+1.75%",
-                        R.drawable.ethereum,
-                        onClick = { navController.navigate("graphs") })
-
-                    CryptoCard("XRP",
-                        "$0.55",
-                        "-0.85%",
-                        R.drawable.xrp,
-                        onClick = { navController.navigate("graphs") })
+                    items(cryptoTopThree){
+                        CryptoCard(name = it.name, price = "22", percentage = "+"+"%.2f".format(it.percentChange)+"%", icon = it.image, onClick = {})
+                    }
+//                    CryptoCard("Bitcoin", "$27,130", "+2.35%", )
+//                    CryptoCard("Ethereum", "$1,920", "+1.75%", R.drawable.ethereum)
+//                    CryptoCard("XRP", "$0.55", "-0.85%", R.drawable.xrp)
                 }
 
                 Spacer(modifier = Modifier.height(35.dp))

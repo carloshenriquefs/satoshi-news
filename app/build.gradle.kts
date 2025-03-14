@@ -42,7 +42,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation (libs.mpandroidchart)
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -58,4 +58,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Retrofit Dependeces
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    //Coil Dependece
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }
