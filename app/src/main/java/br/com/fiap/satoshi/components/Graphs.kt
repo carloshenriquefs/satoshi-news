@@ -3,7 +3,6 @@ package br.com.fiap.satoshi.components
 import android.graphics.Typeface
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,17 +10,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +42,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class Graphs {
@@ -46,107 +52,34 @@ class Graphs {
     companion object {
 
         @Composable
-        fun ProgressBar(
-            title: String,
-            progress: Float,
-            modifier: Modifier = Modifier,
-            showPercent: Boolean = true
-        ) {
-            Column(
-                modifier = modifier.padding(8.dp)
-            ) {
+        fun IndeterminateCircularIndicator() {
+            var loading by remember { mutableStateOf(false) }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        title,
-                        color = Color.White,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    if (showPercent) {
-                        Text(
-                            "${(progress * 100).toInt()}%",
-                            color = Color.White,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
+//            Button(onClick = { loading = true }, enabled = !loading) {
+//                Text("Start loading")
+//            }
 
-                Spacer(modifier = Modifier.height(8.dp))
+            if (!loading) return
 
-                Canvas(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                ) {
-                    val barWidth = size.width
-                    val barHeight = size.height
-
-                    drawRoundRect(
-                        color = Color(0xFF22252B),
-                        size = size,
-                        cornerRadius = CornerRadius(barHeight / 2)
-                    )
-
-                    drawRoundRect(
-                        color = Color(0xFF4378FF),
-                        size = size.copy(width = barWidth * progress),
-                        cornerRadius = CornerRadius(barHeight / 2)
-                    )
-                }
-            }
+            CircularProgressIndicator(
+                modifier = Modifier.width(64.dp),
+                color = MaterialTheme.colorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+            )
         }
 
         @Composable
-        fun CircularProgressBar(
-            progress: Float,
-            modifier: Modifier = Modifier.size(150.dp),
-            strokeWidth: Float = 16f,
-            showPercent: Boolean = true
-        ) {
-            Box(contentAlignment = androidx.compose.ui.Alignment.Center) {
-                Canvas(modifier = modifier) {
-                    val size = size.minDimension
-                    val stroke = Stroke(width = strokeWidth, cap = StrokeCap.Round)
-
-                    drawArc(
-                        color = Color(0xFF22252B),
-                        startAngle = 135f,
-                        sweepAngle = 270f,
-                        useCenter = false,
-                        topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
-                        size = Size(size - strokeWidth, size - strokeWidth),
-                        style = stroke
-                    )
-
-                    drawArc(
-                        color = Color(0xFF4378FF),
-                        startAngle = 135f,
-                        sweepAngle = 270f * progress,
-                        useCenter = false,
-                        topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
-                        size = Size(size - strokeWidth, size - strokeWidth),
-                        style = stroke
-                    )
-                }
-                if (showPercent) {
-                    Text(
-                        text = "${(progress * 100).toInt()}%",
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                }
-            }
-        }
-
-        @Composable
-        fun LineGraph(modifier: Modifier) {
+        fun LineGraph(modifier: Modifier, marketChart: List<List<Double>>) {
             val context = LocalContext.current
+
+            if (marketChart.isEmpty()) {
+                Text(
+                    text = "Nenhum dado disponível para o gráfico.",
+                    color = Color.White,
+                    fontSize = 16.sp
+                )
+                return
+            }
 
             AndroidView(
                 modifier = modifier
@@ -166,20 +99,17 @@ class Graphs {
                             textSize = 10f
                             typeface = Typeface.DEFAULT_BOLD
                             textColor = resources.getColor(R.color.white)
+                            granularity = 1f
                         }
 
-                        xAxis.valueFormatter = IndexAxisValueFormatter(
-                            arrayOf(
-                                "JAN",
-                                "FEB",
-                                "MAR",
-                                "APR",
-                                "MAY",
-                                "JUN",
+                        // Converter timestamps UNIX (milissegundos) para datas legíveis
+                        val dateFormatter = SimpleDateFormat("dd/MM", Locale.getDefault())
+                        val formattedDates = marketChart.map { data ->
+                            val timestamp = (data[0] / 1000).toLong() * 1000
+                            dateFormatter.format(Date(timestamp))
+                        }.toTypedArray()
 
-                                )
-                        )
-                        xAxis.granularity = 1f
+                        xAxis.valueFormatter = IndexAxisValueFormatter(formattedDates)
 
                         axisLeft.apply {
                             setDrawGridLines(true)
@@ -191,40 +121,13 @@ class Graphs {
                         axisRight.isEnabled = false
                         axisLeft.gridLineWidth = 0.5f
 
-                        val entries1 = listOf(
-                            Entry(0f, 500f),
-                            Entry(1f, 450f),
-                            Entry(2f, 300f),
-                            Entry(3f, 200f),
-                            Entry(4f, 100f),
-                            Entry(5f, 50f),
-                            Entry(6f, 50f),
-                            Entry(7f, 50f),
-                            Entry(8f, 50f),
-                            Entry(9f, 50f),
-                            Entry(10f, 50f),
-                            Entry(11f, 50f)
-                        )
+                        // Criar as entradas do gráfico
+                        val entries = marketChart.mapIndexed { index, data ->
+                            Entry(index.toFloat(), data[1].toFloat())
+                        }
 
-                        val entries2 = listOf(
-                            Entry(0f, 50f),
-                            Entry(1f, 200f),
-                            Entry(2f, 500f),
-                            Entry(3f, 250f),
-                            Entry(4f, 400f),
-                            Entry(5f, 750f)
-                        )
-
-                        val entries3 = listOf(
-                            Entry(0f, 20f),
-                            Entry(1f, 100f),
-                            Entry(2f, 400f),
-                            Entry(3f, 750f),
-                            Entry(4f, 300f),
-                            Entry(5f, 700f)
-                        )
-
-                        val dataSet1 = LineDataSet(entries1, "Azul").apply {
+                        // Criar o dataset da linha do gráfico
+                        val dataSet = LineDataSet(entries, "Preço da Moeda").apply {
                             color = ColorTemplate.COLORFUL_COLORS[0]
                             setCircleColor(ColorTemplate.COLORFUL_COLORS[0])
                             lineWidth = 2f
@@ -233,30 +136,16 @@ class Graphs {
                             setDrawValues(false)
                         }
 
-                        val dataSet2 = LineDataSet(entries2, "Vermelho").apply {
-                            color = ColorTemplate.COLORFUL_COLORS[2]
-                            setCircleColor(ColorTemplate.COLORFUL_COLORS[2])
-                            lineWidth = 2f
-                            circleRadius = 4f
-                            setDrawCircleHole(false)
-                            setDrawValues(false)
-                        }
-
-                        val dataSet3 = LineDataSet(entries3, "Verde").apply {
-                            color = ColorTemplate.COLORFUL_COLORS[3]
-                            setCircleColor(ColorTemplate.COLORFUL_COLORS[3])
-                            lineWidth = 2f
-                            circleRadius = 4f
-                            setDrawCircleHole(false)
-                            setDrawValues(false)
-                        }
-
-                        data = LineData(dataSet1, dataSet2, dataSet3)
+                        // Definir os dados no gráfico
+                        data = LineData(dataSet)
                         invalidate()
                     }
                 }
             )
         }
+
+
+
 
         @Composable
         fun MiniLineGraph() {

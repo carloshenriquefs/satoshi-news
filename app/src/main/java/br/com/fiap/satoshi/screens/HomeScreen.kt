@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,12 +25,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -46,38 +48,72 @@ import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoProfitable
+import br.com.fiap.satoshi.model.CryptoSustainable
 import br.com.fiap.satoshi.model.DataProfitable
+import br.com.fiap.satoshi.model.DataSustainable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 @Composable
 fun HomeScreen(navController: NavController) {
-
-    var inputSearchMenu by remember {
-
-        mutableStateOf(value = "")
-
-    }
 
     var cryptoTopThree by remember {
 
         mutableStateOf(listOf<CryptoProfitable>())
     }
 
+    var cryptoSustainable by remember {
+        mutableStateOf(listOf<CryptoSustainable>())
+    }
+
     val getCryptoTopThree = RetrofitFactory()
         .getCryptoService()
-        .getTopProfitable(token = "Barear "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDE4Njc4MTMsImV4cCI6MTc0MTg3MTQxM30.4sbEIpUTD8KN1Vx_PHkpm-rm59zqkl5fxx0hx3_bbsE")
+        .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIwNTA0NjUsImV4cCI6MTc0MjA1NDA2NX0.2xXsNSfI2oDWjP50ymJOrwros5JPh3nwj_VKfleyI1M")
 
-    getCryptoTopThree.enqueue(object: Callback<DataProfitable> {
-        override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
-            cryptoTopThree = resultado.body()!!.data!!.subList(0,3)
-        }
+    val getCryptoSustainable = RetrofitFactory()
+        .getCryptoService()
+        .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIwNTA0NjUsImV4cCI6MTc0MjA1NDA2NX0.2xXsNSfI2oDWjP50ymJOrwros5JPh3nwj_VKfleyI1M")
 
-        override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
-            Log.i("API ERROR","Falha de Authenticação: ${p1.message}")
+    var authError by remember { mutableStateOf(false) }
+
+    LaunchedEffect(authError) {
+        if (authError) {
+            Log.e("AUTH ERROR", "Token expirado, redirecionando...")
+            navController.navigate("login") {
+                popUpTo("home") { inclusive = true }
+            }
         }
-    })
+    }
+    LaunchedEffect(Unit) {
+        getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
+            override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
+                if (resultado.code() == 401) authError = true
+                cryptoTopThree = resultado.body()?.data?: emptyList()
+
+            }
+
+            override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
+                Log.i("API ERROR", "Falha de Autenticação: ${p1.message}")
+            }
+        })
+
+        getCryptoSustainable.enqueue(object : Callback<DataSustainable> {
+            override fun onResponse(
+                p0: Call<DataSustainable>,
+                resultado: Response<DataSustainable>
+            ) {
+                if (resultado.code() == 401) authError = true
+                cryptoSustainable = resultado.body()?.data ?: emptyList()
+
+            }
+
+            override fun onFailure(p0: Call<DataSustainable>, p1: Throwable) {
+                Log.i("API ERROR", "Falha de Autenticação: ${p1.message}")
+            }
+        })
+    }
 
     Box(
         modifier = Modifier
@@ -139,24 +175,28 @@ fun HomeScreen(navController: NavController) {
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    items(cryptoTopThree){
-                        CryptoCard(name = it.name, price = "22", percentage = "+"+"%.2f".format(it.percentChange)+"%", icon = it.image, onClick = {})
+                    items(cryptoTopThree) {
+                        CryptoCard(
+                            name = it.name,
+                            price = "%.2f".format(it.currentPrice),
+                            percentage = "+" + "%.2f".format(it.percentChange) + "%",
+                            icon = it.image,
+                            onClick = { navController.navigate("graphs/${it.id}") })
                     }
-//                    CryptoCard("Bitcoin", "$27,130", "+2.35%", )
-//                    CryptoCard("Ethereum", "$1,920", "+1.75%", R.drawable.ethereum)
-//                    CryptoCard("XRP", "$0.55", "-0.85%", R.drawable.xrp)
+
                 }
 
                 Spacer(modifier = Modifier.height(35.dp))
 
                 Image(
-                    painter = painterResource(R.drawable.btc_news),
+                    painter = painterResource(R.drawable.crypto_news),
                     contentDescription = stringResource(R.string.crypto_news),
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
                             navController.navigate("alerts")
                         }
+                        .clip(shape = RoundedCornerShape(8.dp))
                 )
             }
 
@@ -181,49 +221,23 @@ fun HomeScreen(navController: NavController) {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.clickable { })
                 }
-                Row(
-                    modifier = Modifier.horizontalScroll(ScrollState(0)),
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    CryptoCardInfo(
-                        title = "Ethereum",
-                        description = "Laucnhed in 2015 by Vitalik Buterin, " +
-                                "Ethereum introduced smart contract functionality.",
-                        image = R.drawable.ethereum_menu_other,
-                        onClick = { navController.navigate("graphs") }
-                    )
+                    items(cryptoSustainable) {
+                        CryptoCardInfo(
+                            title = it.name,
+                            image = it.image,
+                            esgScore = it.esgScore,
+                            currentPrice = it.currentPrice,
+                            marketCap = it.marketCap,
+                            onClick = { navController.navigate("graphs/${it.id}") })
+                        Spacer(modifier = Modifier.width(20.dp))
 
-                    CryptoCardInfo(
-                        title = "XRP",
-                        description = "Unlike other cryptocurrencies, " +
-                                "XRP is not mined; all coins were mined at lauch.",
-                        image = R.drawable.xrp_coin,
-                        onClick = { navController.navigate("graphs") }
-                    )
+                    }
 
-                    CryptoCardInfo(
-                        title = "XRP",
-                        description = "Unlike other cryptocurrencies, " +
-                                "XRP is not mined; all coins were mined at lauch.",
-                        image = R.drawable.xrp_coin,
-                        onClick = { navController.navigate("graphs") }
-                    )
-
-                    CryptoCardInfo(
-                        title = "XRP",
-                        description = "Unlike other cryptocurrencies, " +
-                                "XRP is not mined; all coins were mined at lauch.",
-                        image = R.drawable.xrp_coin,
-                        onClick = { navController.navigate("graphs") }
-                    )
-
-                    CryptoCardInfo(
-                        title = "XRP",
-                        description = "Unlike other cryptocurrencies, " +
-                                "XRP is not mined; all coins were mined at lauch.",
-                        image = R.drawable.xrp_coin,
-                        onClick = { navController.navigate("graphs") }
-                    )
                 }
             }
 
@@ -260,7 +274,9 @@ fun HomeScreen(navController: NavController) {
                     Text(text = stringResource(R.string.invest_consciously), color = Color.White)
                 }
             }
+            Spacer(modifier = Modifier.height(50.dp))
         }
+
 
         ComponentMenu(
             leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
@@ -272,10 +288,4 @@ fun HomeScreen(navController: NavController) {
         )
     }
 }
-
-//@Preview(showSystemUi = true, device = "id:pixel_9")
-//@Composable
-//private fun HomeScreenPreview() {
-//    HomeScreen()
-//}
 
