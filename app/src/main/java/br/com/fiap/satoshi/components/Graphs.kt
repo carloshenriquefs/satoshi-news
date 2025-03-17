@@ -2,7 +2,6 @@ package br.com.fiap.satoshi.components
 
 import CustomMarkerView
 import android.graphics.Typeface
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -66,8 +65,6 @@ class Graphs {
         @Composable
         fun LineGraph(modifier: Modifier, marketChart: List<List<Double>>) {
             val context = LocalContext.current
-            Log.i("KALEB", "API: $marketChart")
-
             if (marketChart.isEmpty()) {
                 Text(
                     text = "Nenhum dado disponível para o gráfico.",

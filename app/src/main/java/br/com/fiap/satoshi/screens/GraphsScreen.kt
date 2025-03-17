@@ -48,7 +48,6 @@ import retrofit2.Response
 
 @Composable
 fun GraphsScreen(navController: NavController, id: String) {
-    Log.e("KALEB", id)
 
     var cryptoDetails by remember { mutableStateOf<CryptoDetail?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -57,7 +56,7 @@ fun GraphsScreen(navController: NavController, id: String) {
     val getDetails = RetrofitFactory()
         .getCryptoService()
         .getDetail(
-            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyMjI5OTQsImV4cCI6MTc0MjIyNjU5NH0.9fG_ip3f_pHGbAPG3cfBi1bCOlqu560yUKdlYsVfBBI" +
+            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo" +
                     "", coinId = id
         )
 
@@ -117,7 +116,6 @@ fun GraphsScreen(navController: NavController, id: String) {
                                 }
                             )
                         }
-                        Log.i("KAIO", "API: ${cryptoDetails}")
                         AsyncImage(
                             model = cryptoDetails?.coinInfo?.image?.large,
                             contentDescription = "Coin Logo",
@@ -204,7 +202,6 @@ fun GraphsScreen(navController: NavController, id: String) {
                         fontSize = 18.sp
                     )
                     cryptoDetails?.marketChart?.let { chartData ->
-                        Log.i("SUCCESS", "MarketChart: ${chartData}")
                         Graphs.LineGraph(modifier = Modifier.padding(8.dp), marketChart = chartData)
                     } ?: run {
                         Text(
