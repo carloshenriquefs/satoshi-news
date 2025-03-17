@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.screens
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,9 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -27,11 +33,35 @@ import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ConvertCard
 import br.com.fiap.satoshi.components.Card.Companion.TopCryptoCard
+import br.com.fiap.satoshi.components.DropDown
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
+import br.com.fiap.satoshi.factory.RetrofitFactory
+import br.com.fiap.satoshi.model.CryptoSustainable
 import br.com.fiap.satoshi.ui.theme.InterBold
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun ConversionScreen(navController: NavController) {
+
+    val conversionList by remember {
+        mutableStateOf(listOf<CryptoSustainable>())
+    }
+
+    val callConversion = RetrofitFactory()
+        .getCryptoService()
+        .getAllConversion()
+
+    callConversion.enqueue(object : Callback<CryptoSustainable> {
+        override fun onResponse(call: Call<CryptoSustainable>, response: Response<CryptoSustainable>) {
+            Log.i("FIAP", "onResponse: ${response.body()}")
+        }
+
+        override fun onFailure(call: Call<CryptoSustainable>, t: Throwable) {
+            Log.i("FIAP", "onResponse: ${t.message}")
+        }
+    })
 
     Box(
         modifier = Modifier
@@ -108,70 +138,22 @@ fun ConversionScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(ScrollState(0))
                 ) {
-                    TopCryptoCard(
-                        icon = R.drawable.bitcoin,
-                        name = "Bitcoin",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "BTC"
-                    )
-
-                    TopCryptoCard(
-                        icon = R.drawable.binance,
-                        name = "Binance",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "BNC"
-                    )
-
-                    TopCryptoCard(
-                        icon = R.drawable.xrp,
-                        name = "XRP",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "XRP"
-                    )
-
-                    TopCryptoCard(
-                        icon = R.drawable.tether,
-                        name = "Tether",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "Tether"
-                    )
-
-                    TopCryptoCard(
-                        icon = R.drawable.tron,
-                        name = "Tron",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "Tron"
-                    )
-
-                    TopCryptoCard(
-                        icon = R.drawable.bitcoin,
-                        name = "Bitcoin",
-                        valueDolar = "$27,130",
-                        priceChange = "+2.35%",
-                        price = "$3,124.22",
-                        amountOwned = "0.1912343",
-                        tickerSymbol = "BTC"
-                    )
+                    items(conversionList) { conversion ->
+                        TopCryptoCard(
+                            icon = conversion.image,
+                            name = conversion.name,
+                            valueDolar = "$27,130",
+                            priceChange = "+2.35%",
+                            price = "${conversion.marketCap}",
+                            amountOwned = "${conversion.currentPrice}",
+                            tickerSymbol = conversion.symbol
+                        )
+                    }
                 }
             }
         }

@@ -1,6 +1,6 @@
 package br.com.fiap.satoshi.screens
 
-import androidx.compose.foundation.ScrollState
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -24,10 +28,34 @@ import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
+import br.com.fiap.satoshi.factory.RetrofitFactory
+import br.com.fiap.satoshi.model.AlertsCurrency
+import br.com.fiap.satoshi.model.AlertsResult
 import br.com.fiap.satoshi.ui.theme.InterBold
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun AlertsCurrencyScreen(navController: NavController) {
+
+    val alertsList by remember {
+        mutableStateOf(listOf<AlertsCurrency>())
+    }
+
+    val callAlerts = RetrofitFactory()
+        .getCryptoService()
+        .getAllAlerts()
+
+    callAlerts.enqueue(object : Callback<AlertsResult> {
+        override fun onResponse(call: Call<AlertsResult>, response: Response<AlertsResult>) {
+            Log.i("FIAP", "onResponse: ${response.body()}")
+        }
+
+        override fun onFailure(call: Call<AlertsResult>, t: Throwable) {
+            Log.i("FIAP", "onResponse: ${t.message}")
+        }
+    })
 
     Box(
         modifier = Modifier
@@ -59,74 +87,19 @@ fun AlertsCurrencyScreen(navController: NavController) {
                 fontFamily = InterBold
             )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(ScrollState(0))
-            ) {
+            LazyColumn {
+                items(alertsList) { alerts ->
 
-                Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
+                    ComponentNewsLetter(
+                        alert = alerts.title,
+                        date = alerts.updatedAt,
+                        coin = alerts.subtitle,
+                        onClick = { navController.navigate("newsletter") }
+                    )
 
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentNewsLetter(
-                    alert = stringResource(R.string.alert),
-                    date = stringResource(R.string.date),
-                    coin = stringResource(R.string.coin),
-                    onClick = { navController.navigate("newsletter") }
-                )
+                }
             }
         }
 

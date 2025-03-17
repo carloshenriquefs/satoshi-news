@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitFactory {
 
     private val BASE_URL: String = "https://criptomaniac-app.vercel.app/"
+
     private val retrofitFactory = Retrofit
         .Builder()
         .baseUrl(BASE_URL)
