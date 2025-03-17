@@ -95,7 +95,7 @@ fun SatoshiNewsScreen(navController: NavController) {
                             fontFamily = Kotta
                         )
                     ) {
-                        append("of ")
+                        append("\nof ")
                     }
                     withStyle(
                         style = SpanStyle(
