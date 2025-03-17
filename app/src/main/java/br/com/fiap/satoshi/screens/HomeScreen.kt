@@ -27,9 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,39 +41,25 @@ import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCard
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
+import br.com.fiap.satoshi.components.Graphs
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
-import br.com.fiap.satoshi.factory.RetrofitFactory
-import br.com.fiap.satoshi.model.CryptoProfitable
-import br.com.fiap.satoshi.model.CryptoSustainable
-import br.com.fiap.satoshi.model.DataProfitable
-import br.com.fiap.satoshi.model.DataSustainable
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.text.DecimalFormat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.fiap.satoshi.viewmodel.HomeViewModel
+
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewModel()) {
 
-    var cryptoTopThree by remember {
+    val cryptoTopThree by viewModel.cryptoTopThree
+    val cryptoSustainable by viewModel.cryptoSustainable
+    val isLoading by viewModel.isLoading
+    val authError by viewModel.authError
 
-        mutableStateOf(listOf<CryptoProfitable>())
+
+    LaunchedEffect(Unit) {
+        viewModel.loadCryptoData()
     }
-
-    var cryptoSustainable by remember {
-        mutableStateOf(listOf<CryptoSustainable>())
-    }
-
-    val getCryptoTopThree = RetrofitFactory()
-        .getCryptoService()
-        .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIwNTA0NjUsImV4cCI6MTc0MjA1NDA2NX0.2xXsNSfI2oDWjP50ymJOrwros5JPh3nwj_VKfleyI1M")
-
-    val getCryptoSustainable = RetrofitFactory()
-        .getCryptoService()
-        .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIwNTA0NjUsImV4cCI6MTc0MjA1NDA2NX0.2xXsNSfI2oDWjP50ymJOrwros5JPh3nwj_VKfleyI1M")
-
-    var authError by remember { mutableStateOf(false) }
 
     LaunchedEffect(authError) {
         if (authError) {
@@ -86,197 +69,180 @@ fun HomeScreen(navController: NavController) {
             }
         }
     }
-    LaunchedEffect(Unit) {
-        getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
-            override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
-                if (resultado.code() == 401) authError = true
-                cryptoTopThree = resultado.body()?.data?: emptyList()
-
-            }
-
-            override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
-                Log.i("API ERROR", "Falha de Autenticação: ${p1.message}")
-            }
-        })
-
-        getCryptoSustainable.enqueue(object : Callback<DataSustainable> {
-            override fun onResponse(
-                p0: Call<DataSustainable>,
-                resultado: Response<DataSustainable>
-            ) {
-                if (resultado.code() == 401) authError = true
-                cryptoSustainable = resultado.body()?.data ?: emptyList()
-
-            }
-
-            override fun onFailure(p0: Call<DataSustainable>, p1: Throwable) {
-                Log.i("API ERROR", "Falha de Autenticação: ${p1.message}")
-            }
-        })
-    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(R.color.primary))
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(ScrollState(0))
-        ) {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-            ) {
+        when {
+            isLoading -> {
+                Graphs.LoadingScreen(true)
+            }
 
-                Row(
+            else -> {
+
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 20.dp),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxSize()
+                        .verticalScroll(ScrollState(0))
                 ) {
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
-                        shape = RoundedCornerShape(10.dp),
-                        modifier = Modifier.size(30.dp)
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
                     ) {
-                        Image(painter = painterResource(R.drawable.notification_icon),
-                            contentDescription = stringResource(R.string.notification_icon),
+
+                        Row(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(5.dp)
-                                .clickable { })
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                ComponentSearch(label = stringResource(R.string.search))
-
-                Spacer(modifier = Modifier.height(35.dp))
-
-                Column(
-                    modifier = Modifier
-                        .padding(bottom = 25.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.top_three_cryptos),
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color.White,
-                        fontSize = 15.sp
-                    )
-                }
-
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    items(cryptoTopThree) {
-                        CryptoCard(
-                            name = it.name,
-                            price = "%.2f".format(it.currentPrice),
-                            percentage = "+" + "%.2f".format(it.percentChange) + "%",
-                            icon = it.image,
-                            onClick = { navController.navigate("graphs/${it.id}") })
-                    }
-
-                }
-
-                Spacer(modifier = Modifier.height(35.dp))
-
-                Image(
-                    painter = painterResource(R.drawable.crypto_news),
-                    contentDescription = stringResource(R.string.crypto_news),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            navController.navigate("alerts")
+                                .fillMaxWidth()
+                                .padding(top = 20.dp),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Card(
+                                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.secondary)),
+                                shape = RoundedCornerShape(10.dp),
+                                modifier = Modifier.size(30.dp)
+                            ) {
+                                Image(painter = painterResource(R.drawable.notification_icon),
+                                    contentDescription = stringResource(R.string.notification_icon),
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(5.dp)
+                                        .clickable { })
+                            }
                         }
-                        .clip(shape = RoundedCornerShape(8.dp))
-                )
-            }
 
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(25.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.other_crypto),
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color.White,
-                        fontSize = 15.sp
-                    )
-                    Text(text = stringResource(R.string.see_all),
-                        color = Color(0xffF7931A),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable { })
-                }
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    items(cryptoSustainable) {
-                        CryptoCardInfo(
-                            title = it.name,
-                            image = it.image,
-                            esgScore = it.esgScore,
-                            currentPrice = it.currentPrice,
-                            marketCap = it.marketCap,
-                            onClick = { navController.navigate("graphs/${it.id}") })
-                        Spacer(modifier = Modifier.width(20.dp))
+                        ComponentSearch(label = stringResource(R.string.search))
 
-                    }
+                        Spacer(modifier = Modifier.height(35.dp))
 
-                }
-            }
+                        Column(
+                            modifier = Modifier
+                                .padding(bottom = 25.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.top_three_cryptos),
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.White,
+                                fontSize = 15.sp
+                            )
+                        }
 
-            Column(
-                modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Spacer(modifier = Modifier.height(20.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 25.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.green_crypto),
-                        color = Color.White,
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Row {
-                        Text(
-                            text = stringResource(R.string.sustainable_future),
-                            color = Color.White,
-                            fontSize = 18.sp
-                        )
-                        Text(
-                            text = " " + stringResource(R.string.coins),
-                            color = Color(0xffF7931A),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
+                        LazyRow(modifier = Modifier
+                                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            items(cryptoTopThree) {
+                                CryptoCard(
+                                    name = it.name,
+                                    price = "%.2f".format(it.currentPrice),
+                                    percentage = "+" + "%.2f".format(it.percentChange) + "%",
+                                    icon = it.image,
+                                    onClick = { navController.navigate("graphs/${it.id}") })
+                            }
+
+                        }
+
+                        Spacer(modifier = Modifier.height(35.dp))
+
+                        Image(
+                            painter = painterResource(R.drawable.crypto_news),
+                            contentDescription = stringResource(R.string.crypto_news),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    navController.navigate("alerts")
+                                }
+                                .clip(shape = RoundedCornerShape(8.dp))
                         )
                     }
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Text(text = stringResource(R.string.invest_consciously), color = Color.White)
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(25.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.other_crypto),
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.White,
+                                fontSize = 15.sp
+                            )
+                            Text(text = stringResource(R.string.see_all),
+                                color = Color(0xffF7931A),
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.clickable { })
+                        }
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            items(cryptoSustainable) {
+                                CryptoCardInfo(
+                                    title = it.name,
+                                    image = it.image,
+                                    esgScore = it.esgScore,
+                                    currentPrice = it.currentPrice,
+                                    marketCap = it.marketCap,
+                                    onClick = { navController.navigate("graphs/${it.id}") })
+                                Spacer(modifier = Modifier.width(20.dp))
+
+                            }
+
+                        }
+                    }
+
+                    Column(
+                        modifier = Modifier.fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 25.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.green_crypto),
+                                color = Color.White,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(32.dp))
+                            Row {
+                                Text(
+                                    text = stringResource(R.string.sustainable_future),
+                                    color = Color.White,
+                                    fontSize = 18.sp
+                                )
+                                Text(
+                                    text = " " + stringResource(R.string.coins),
+                                    color = Color(0xffF7931A),
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(32.dp))
+                            Text(
+                                text = stringResource(R.string.invest_consciously),
+                                color = Color.White
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(50.dp))
                 }
+
             }
-            Spacer(modifier = Modifier.height(50.dp))
+
         }
-
 
         ComponentMenu(
             leftIcon = painterResource(R.drawable.left_icon_bottom_bar),

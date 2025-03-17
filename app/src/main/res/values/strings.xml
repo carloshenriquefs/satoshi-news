@@ -62,7 +62,7 @@
 
     <string name="category">Category</string>
     <string name="challenge">Challenge 01</string>
-    <string name="chart_title">Chart Title Goes Here</string>
+    <string name="chart_title">Currency price variation</string>
 
     <string name="esg_title">ESG Score: </string>
     <string name="currentprice_title">Current\nPrice: </string>

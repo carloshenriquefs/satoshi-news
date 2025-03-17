@@ -56,29 +56,27 @@ fun GraphsScreen(navController: NavController, id: String) {
 
     val getDetails = RetrofitFactory()
         .getCryptoService()
-        .getDetail(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIwNTA0NjUsImV4cCI6MTc0MjA1NDA2NX0.2xXsNSfI2oDWjP50ymJOrwros5JPh3nwj_VKfleyI1M" +
-                "", coinId = id)
+        .getDetail(
+            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyMjI5OTQsImV4cCI6MTc0MjIyNjU5NH0.9fG_ip3f_pHGbAPG3cfBi1bCOlqu560yUKdlYsVfBBI" +
+                    "", coinId = id
+        )
 
     getDetails.enqueue(object : Callback<CryptoDetail> {
         override fun onResponse(p0: Call<CryptoDetail>, resultado: Response<CryptoDetail>) {
             isLoading = false
             if (resultado.isSuccessful) {
-                val responseBody = resultado.body()
-                if (responseBody != null) {
-                    Log.e("KALEB", "Dados recebidos: $responseBody")
-                    cryptoDetails = responseBody
-                } else {
-                    Log.e("KALEB", "Resposta da API vazia ou nula")
-                }
-            } else {
-                Log.e("KALEB", "Erro na API: ${resultado.message()} - Código: ${resultado.code()}")
-            }
+                cryptoDetails = resultado.body()
+
+            } else Log.e(
+                "ERROR",
+                "Erro na API: ${resultado.message()} - Código: ${resultado.code()}"
+            )
         }
 
         override fun onFailure(p0: Call<CryptoDetail>, p1: Throwable) {
             isLoading = false
             errorMessage = "Falha na requisição: ${p1.message}"
-            Log.e("KALEB", "Falha na requisição: ${p1.message}")
+            Log.e("ERROR", "Falha na requisição: ${p1.message}")
         }
     })
 
@@ -119,6 +117,7 @@ fun GraphsScreen(navController: NavController, id: String) {
                                 }
                             )
                         }
+                        Log.i("KAIO", "API: ${cryptoDetails}")
                         AsyncImage(
                             model = cryptoDetails?.coinInfo?.image?.large,
                             contentDescription = "Coin Logo",
@@ -130,15 +129,9 @@ fun GraphsScreen(navController: NavController, id: String) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            if (isLoading) {
-                Graphs.IndeterminateCircularIndicator()
-            } else {
+            if (isLoading) Graphs.LoadingScreen(true) else {
                 errorMessage?.let {
-                    Text(
-                        text = it,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Text(text = it, color = Color.Red, fontWeight = FontWeight.Bold)
                 }
 
                 cryptoDetails?.let { details ->
@@ -210,7 +203,8 @@ fun GraphsScreen(navController: NavController, id: String) {
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
                     )
-                    cryptoDetails?.coinInfo?.marketChart?.let { chartData ->
+                    cryptoDetails?.marketChart?.let { chartData ->
+                        Log.i("SUCCESS", "MarketChart: ${chartData}")
                         Graphs.LineGraph(modifier = Modifier.padding(8.dp), marketChart = chartData)
                     } ?: run {
                         Text(
@@ -222,6 +216,7 @@ fun GraphsScreen(navController: NavController, id: String) {
 
                 }
             }
+            Spacer(modifier = Modifier.height(60.dp))
         }
     }
 

@@ -1,40 +1,34 @@
 package br.com.fiap.satoshi.components
 
+import CustomMarkerView
 import android.graphics.Typeface
-import androidx.compose.foundation.Canvas
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import br.com.fiap.satoshi.R
-import br.com.fiap.satoshi.components.Graphs.Companion.MiniLineGraph
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -52,25 +46,27 @@ class Graphs {
     companion object {
 
         @Composable
-        fun IndeterminateCircularIndicator() {
-            var loading by remember { mutableStateOf(false) }
-
-//            Button(onClick = { loading = true }, enabled = !loading) {
-//                Text("Start loading")
-//            }
-
-            if (!loading) return
-
-            CircularProgressIndicator(
-                modifier = Modifier.width(64.dp),
-                color = MaterialTheme.colorScheme.secondary,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant,
-            )
+        fun LoadingScreen(isLoading: Boolean) {
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.7f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(64.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
+            }
         }
 
         @Composable
         fun LineGraph(modifier: Modifier, marketChart: List<List<Double>>) {
             val context = LocalContext.current
+            Log.i("KALEB", "API: $marketChart")
 
             if (marketChart.isEmpty()) {
                 Text(
@@ -87,11 +83,13 @@ class Graphs {
                     .height(300.dp),
                 factory = { ctx ->
                     LineChart(ctx).apply {
+
                         description.isEnabled = false
                         setTouchEnabled(true)
                         setPinchZoom(true)
                         setBackgroundColor(resources.getColor(R.color.secondary))
                         legend.isEnabled = false
+
 
                         xAxis.apply {
                             position = XAxis.XAxisPosition.BOTTOM
@@ -102,8 +100,7 @@ class Graphs {
                             granularity = 1f
                         }
 
-                        // Converter timestamps UNIX (milissegundos) para datas legíveis
-                        val dateFormatter = SimpleDateFormat("dd/MM", Locale.getDefault())
+                        val dateFormatter = SimpleDateFormat("dd/MM/YY", Locale.getDefault())
                         val formattedDates = marketChart.map { data ->
                             val timestamp = (data[0] / 1000).toLong() * 1000
                             dateFormatter.format(Date(timestamp))
@@ -121,6 +118,7 @@ class Graphs {
                         axisRight.isEnabled = false
                         axisLeft.gridLineWidth = 0.5f
 
+
                         // Criar as entradas do gráfico
                         val entries = marketChart.mapIndexed { index, data ->
                             Entry(index.toFloat(), data[1].toFloat())
@@ -128,23 +126,27 @@ class Graphs {
 
                         // Criar o dataset da linha do gráfico
                         val dataSet = LineDataSet(entries, "Preço da Moeda").apply {
-                            color = ColorTemplate.COLORFUL_COLORS[0]
-                            setCircleColor(ColorTemplate.COLORFUL_COLORS[0])
-                            lineWidth = 2f
-                            circleRadius = 4f
+                            color = ColorTemplate.rgb("#FFFFFF")
+                            setCircleColor(ColorTemplate.rgb("#F7931A"))
+                            lineWidth = 1f
+                            circleRadius = 2f
                             setDrawCircleHole(false)
                             setDrawValues(false)
+
                         }
 
                         // Definir os dados no gráfico
                         data = LineData(dataSet)
+
+                        val markerView = CustomMarkerView(context, marketChart)
+                        markerView.chartView = this
+                        marker = markerView
+
                         invalidate()
                     }
                 }
             )
         }
-
-
 
 
         @Composable
@@ -213,10 +215,4 @@ class Graphs {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun GraphsPreview() {
-    MiniLineGraph()
 }
