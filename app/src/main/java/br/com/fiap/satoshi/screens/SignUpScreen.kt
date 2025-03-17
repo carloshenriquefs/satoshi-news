@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +34,15 @@ import br.com.fiap.satoshi.ui.theme.InterRegular
 
 @Composable
 fun SignUpScreen(navController: NavController) {
+
+    var name by remember { mutableStateOf("") }
+    var nameError by remember { mutableStateOf(false) }
+
+    var email by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
+
+    var password by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -67,23 +80,42 @@ fun SignUpScreen(navController: NavController) {
 
             ComponentInbox(
                 label = stringResource(R.string.name),
-                placeholder = stringResource(R.string.input_name)
+                placeholder = stringResource(R.string.input_name),
+                value = name,
+                onValueChange = { name = it },
+                isError = nameError,
+                errorMessage = "Name Required"
             )
 
             ComponentInbox(
                 label = stringResource(R.string.email),
-                placeholder = stringResource(R.string.input_email)
+                placeholder = stringResource(R.string.input_email),
+                value = email,
+                onValueChange = { email = it },
+                isError = emailError,
+                errorMessage = "E-mail Required"
             )
 
             ComponentInbox(
                 label = stringResource(R.string.password),
-                placeholder = stringResource(R.string.input_password)
+                placeholder = stringResource(R.string.input_password),
+                value = password,
+                onValueChange = { password = it },
+                isError = passwordError,
+                errorMessage = "Password Required"
             )
 
             ComponentButton(
                 label = stringResource(R.string.sign_up),
-                onClick = { navController.navigate("login") }
+                onClick = {
+                    nameError = name.isBlank()
+                    emailError = email.isBlank()
+                    passwordError = password.isBlank()
 
+                    if (!nameError && !emailError && !passwordError) {
+                        navController.navigate("login")
+                    }
+                }
             )
 
             Row() {

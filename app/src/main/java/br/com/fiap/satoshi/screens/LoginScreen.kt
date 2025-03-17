@@ -15,8 +15,10 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +40,13 @@ import br.com.fiap.satoshi.ui.theme.InterRegular
 @Composable
 fun LoginScreen(navController: NavController) {
 
-    var password = remember {
-        mutableStateOf(true)
-    }
+    var email by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
+
+    var password by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf(false) }
+
+    var rememberPassword by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -78,13 +84,20 @@ fun LoginScreen(navController: NavController) {
 
             ComponentInbox(
                 label = stringResource(R.string.email),
-                placeholder = stringResource(R.string.input_email)
+                placeholder = stringResource(R.string.input_email),
+                value = email,
+                onValueChange = { email = it },
+                isError = emailError,
+                errorMessage = "E-mail Required"
             )
 
             ComponentInboxPassword(
                 label = stringResource(R.string.password),
                 placeholder = stringResource(R.string.input_password),
-                icon = stringResource(R.string.icon_password)
+                value = password,
+                onValueChange = { password = it },
+                isError = passwordError,
+                errorMessage = "Password Required"
             )
 
             Row(
@@ -94,8 +107,8 @@ fun LoginScreen(navController: NavController) {
                     .fillMaxWidth()
             ) {
                 Checkbox(
-                    checked = password.value,
-                    onCheckedChange = { password.value = it },
+                    checked = rememberPassword,
+                    onCheckedChange = { rememberPassword = it },
                     colors = CheckboxDefaults.colors(
                         checkedColor = Color.White,
                         uncheckedColor = Color.White
@@ -114,13 +127,20 @@ fun LoginScreen(navController: NavController) {
 
             ComponentButton(
                 label = stringResource(R.string.log_in),
-                onClick = { navController.navigate("home")}
+                onClick = {
+                    emailError = email.isBlank()
+                    passwordError = password.isBlank()
+
+                    if (!emailError && !passwordError) {
+                        navController.navigate("home")
+                    }
+                }
             )
 
             Row() {
                 Text(
                     text = stringResource(R.string.dont_account),
-                    fontSize = 11.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     color = colorResource(id = R.color.white),
                     fontFamily = InterRegular
@@ -128,7 +148,7 @@ fun LoginScreen(navController: NavController) {
 
                 Text(
                     text = stringResource(R.string.signup),
-                    fontSize = 11.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.yellow_bitcoin),
                     fontFamily = InterBold,

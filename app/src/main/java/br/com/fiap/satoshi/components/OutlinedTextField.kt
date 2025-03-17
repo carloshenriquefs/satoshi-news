@@ -5,11 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -25,7 +28,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
 
 class OutlinedTextField {
@@ -33,16 +39,17 @@ class OutlinedTextField {
     companion object {
 
         @Composable
-        fun ComponentInbox(label: String, placeholder: String) {
-            var labelField by remember {
-                mutableStateOf("")
-            }
-
+        fun ComponentInbox(
+            label: String,
+            placeholder: String,
+            value: String,
+            onValueChange: (String) -> Unit,
+            isError: Boolean,
+            errorMessage: String = ""
+        ) {
             OutlinedTextField(
-                value = labelField,
-                onValueChange = { letra ->
-                    labelField = letra
-                },
+                value = value,
+                onValueChange = { onValueChange(it) },
                 modifier = Modifier
                     .width(280.dp),
                 singleLine = true,
@@ -66,26 +73,37 @@ class OutlinedTextField {
                     unfocusedTextColor = Color.White,
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
-
                 ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                isError = isError,
+                supportingText = {
+                    if (isError) {
+                        Text(text = errorMessage, color = Color.Red, fontSize = 12.sp)
+                    }
+                }
             )
         }
 
         @Composable
-        fun ComponentInboxPassword(label: String, placeholder: String, icon: String) {
-            var labelField by remember {
-                mutableStateOf("")
-            }
+        fun ComponentInboxPassword(
+            label: String,
+            placeholder: String,
+            value: String,
+            onValueChange: (String) -> Unit,
+            isError: Boolean,
+            errorMessage: String = ""
+        ) {
+            var passwordVisible by remember { mutableStateOf(false) }
+
+            val sizeMax = 8
 
             OutlinedTextField(
-                value = labelField,
-                onValueChange = { letra ->
-                    labelField = letra
-                },
+                value = value,
+                onValueChange = { letters -> if (letters.length <= sizeMax) onValueChange(letters) },
                 modifier = Modifier
                     .width(280.dp),
                 singleLine = true,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 label = {
                     Text(
                         text = label,
@@ -101,14 +119,15 @@ class OutlinedTextField {
                     )
                 },
                 trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.eye),
-                        contentDescription = icon,
-                        Modifier
-                            .width(30.dp)
-                            .padding(end = 7.dp),
-                        tint = Color(255, 255, 255, 255),
-                    )
+                    val image =
+                        if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                    IconButton(
+                        onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            imageVector = image,
+                            contentDescription = if (passwordVisible) "Ocultar senha" else "Mostrar senha"
+                        )
+                    }
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -118,18 +137,19 @@ class OutlinedTextField {
                     unfocusedBorderColor = Color.White
 
                 ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                isError = isError,
+                supportingText = {
+                    if (isError) {
+                        Text(text = errorMessage, color = Color.Red, fontSize = 12.sp)
+                    }
+                }
             )
-
         }
 
         @Composable
         fun ComponentSearch(label: String) {
-            var inputSearchMenu by remember {
-
-                mutableStateOf(value = "")
-
-            }
+            var inputSearchMenu by remember { mutableStateOf(value = "") }
 
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
