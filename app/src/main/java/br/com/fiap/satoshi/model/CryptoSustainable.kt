@@ -11,4 +11,4 @@ data class CryptoSustainable (
     @SerializedName("esg_score") var esgScore: Int = 0,
     @SerializedName("current_price") var currentPrice: Double = 0.0,
     @SerializedName("market_cap") var marketCap: Int = 0
-)
+    )

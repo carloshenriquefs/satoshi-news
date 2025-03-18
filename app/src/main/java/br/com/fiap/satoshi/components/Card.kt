@@ -37,6 +37,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.fiap.satoshi.R
@@ -119,7 +120,7 @@ class Card {
 
         @Composable
         fun TopCryptoCard(
-            icon: String,
+            icon: Int,
             name: String,
             valueDolar: String,
             priceChange: String,
@@ -142,8 +143,8 @@ class Card {
                         .fillMaxWidth()
                         .padding(10.dp)
                 ) {
-                    AsyncImage(
-                        icon,
+                    Image(
+                        painter = painterResource(icon),
                         contentDescription = stringResource(R.string.bitcoin_logo),
                         modifier = Modifier
                             .size(40.dp)
@@ -351,7 +352,8 @@ class Card {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(10.dp),
+                        .padding(10.dp)
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(
@@ -383,8 +385,10 @@ class Card {
         @Composable
         fun CryptoCardInfo(
             title: String,
-            description: String,
-            image: Int,
+            image: String,
+            esgScore: Int,
+            currentPrice: Double,
+            marketCap: Long,
             onClick: () -> Unit
         ) {
 
@@ -401,8 +405,8 @@ class Card {
                         .verticalScroll(ScrollState(0)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(image),
+                    AsyncImage(
+                        model = image,
                         contentDescription = "$image Image",
                         modifier = Modifier
                             .clickable {
@@ -410,20 +414,90 @@ class Card {
                             }
                     )
 
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = title,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.Start)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        fontSize = 20.sp,
+
                     )
-                    Text(
-                        text = description,
-                        color = Color.White
-                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.esg_title) + " ",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp,
+                        )
+                        Text(
+                            text = esgScore.toString(),
+                            color = Color(0xffF7931A),
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 10.sp
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.currentprice_title) + " ",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                        Text(
+                            text = "$" + "%.2f".format(currentPrice),
+                            color = Color(0xffF7931A),
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 10.sp
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.marketcap_title) + " ",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                        var marketCapF: String = when {
+                            marketCap > 999_999_999 -> "%.1f".format(marketCap.toDouble() / 1000000000.0) + "B"
+                            marketCap > 999_999 -> "%.1f".format(marketCap.toDouble() / 1000000.0) + "M"
+                            else -> "%.1f".format(marketCap.toDouble() / 1000.0) + "K"
+                        }
+
+                        Text(
+                            text = marketCapF,
+                            color = Color(0xffF7931A),
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 10.sp
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+
                 }
             }
-            Spacer(modifier = Modifier.width(30.dp))
-
         }
+    }
+
+    @Preview
+    @Composable
+    private fun Aa() {
+        CryptoCardInfo(title = "Algorand", image = "sss", esgScore = 20, currentPrice = 2222.2, marketCap = 2222, onClick = {})
     }
 }

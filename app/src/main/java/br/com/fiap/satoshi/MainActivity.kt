@@ -39,7 +39,9 @@ class MainActivity : ComponentActivity() {
                         composable(route = "login") { LoginScreen(navController) }
                         composable(route = "signup") { SignUpScreen(navController) }
                         composable(route = "home") { HomeScreen(navController) }
-                        composable(route = "graphs") { GraphsScreen(navController) }
+                        composable(route = "graphs/{id}") {
+                            val id = it.arguments?.getString("id")
+                            GraphsScreen(navController, id!!) }
                         composable(route = "alerts") { AlertsCurrencyScreen(navController) }
                         composable(route = "newsletter") { NewsLetterScreen(navController) }
                         composable(route = "conversion") { ConversionScreen(navController) }

@@ -61,6 +61,10 @@
 
     <string name="category">Categoria</string>
     <string name="challenge">Desafio 01</string>
-    <string name="chart_title">O título do gráfico vai aqui</string>
+    <string name="chart_title">Variação do preço da moeda</string>
+
+    <string name="esg_title">Pontuação ESG: </string>
+    <string name="currentprice_title">Preço Atual: </string>
+    <string name="marketcap_title">Capitalização de Mercado: </string>
 
 </resources>
