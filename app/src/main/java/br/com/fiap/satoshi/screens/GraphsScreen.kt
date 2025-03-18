@@ -56,10 +56,9 @@ fun GraphsScreen(navController: NavController, id: String) {
     val getDetails = RetrofitFactory()
         .getCryptoService()
         .getDetail(
-            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo" +
+            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM" +
                     "", coinId = id
         )
-
     getDetails.enqueue(object : Callback<CryptoDetail> {
         override fun onResponse(p0: Call<CryptoDetail>, resultado: Response<CryptoDetail>) {
             isLoading = false
@@ -67,7 +66,7 @@ fun GraphsScreen(navController: NavController, id: String) {
                 cryptoDetails = resultado.body()
 
             } else Log.e(
-                "ERROR",
+                "FIAP",
                 "Erro na API: ${resultado.message()} - Código: ${resultado.code()}"
             )
         }
@@ -75,7 +74,6 @@ fun GraphsScreen(navController: NavController, id: String) {
         override fun onFailure(p0: Call<CryptoDetail>, p1: Throwable) {
             isLoading = false
             errorMessage = "Falha na requisição: ${p1.message}"
-            Log.e("ERROR", "Falha na requisição: ${p1.message}")
         }
     })
 
@@ -225,6 +223,7 @@ fun GraphsScreen(navController: NavController, id: String) {
         onMidClick = { navController.navigate("home") },
         onRightClick = { navController.navigate("conversion") }
     )
+
 }
 
 

@@ -31,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -273,7 +272,7 @@ class Card {
         }
 
         @Composable
-        fun ComponentCardUser(user: Painter, name: String, text: String) {
+        fun ComponentCardUser(user: String, name: String, text: String) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.background)),
                 modifier = Modifier
@@ -287,9 +286,9 @@ class Card {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = user,
-                            contentDescription = "Conversion Icon",
+                        AsyncImage(
+                            model = user,
+                            contentDescription = "Author Image",
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(shape = CircleShape),
@@ -321,7 +320,8 @@ class Card {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp),
+                            .padding(20.dp)
+                            .verticalScroll(ScrollState(0)),
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
@@ -388,7 +388,7 @@ class Card {
             image: String,
             esgScore: Int,
             currentPrice: Double,
-            marketCap: Int,
+            marketCap: Long,
             onClick: () -> Unit
         ) {
 
@@ -424,10 +424,10 @@ class Card {
 
                         )
                     Spacer(modifier = Modifier.height(10.dp))
-                    Row(
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = stringResource(R.string.esg_title) + " ",
@@ -444,10 +444,10 @@ class Card {
                         Spacer(modifier = Modifier.width(10.dp))
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Row(
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = stringResource(R.string.currentprice_title) + " ",
@@ -464,10 +464,10 @@ class Card {
                         Spacer(modifier = Modifier.width(10.dp))
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Row(
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = stringResource(R.string.marketcap_title) + " ",

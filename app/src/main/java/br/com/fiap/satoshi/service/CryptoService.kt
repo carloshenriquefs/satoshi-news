@@ -3,9 +3,11 @@ package br.com.fiap.satoshi.service
 import br.com.fiap.satoshi.model.AlertsResult
 import br.com.fiap.satoshi.model.CryptoDetail
 import br.com.fiap.satoshi.model.CryptoSustainable
+import br.com.fiap.satoshi.model.DataNewsLetter
 import br.com.fiap.satoshi.model.DataProfitable
 import br.com.fiap.satoshi.model.DataSustainable
 import br.com.fiap.satoshi.model.LoginRequest
+import br.com.fiap.satoshi.model.Newsletter
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +31,9 @@ interface CryptoService {
 
     @GET("alerts")
     fun getAllAlerts(): Call<AlertsResult>
+
+    @GET("/posts?limit=2")
+    fun getPost(@Header("Authorization") token: String): Call<DataNewsLetter>
 
     @GET("conversion")
     fun getAllConversion(): Call<CryptoSustainable>

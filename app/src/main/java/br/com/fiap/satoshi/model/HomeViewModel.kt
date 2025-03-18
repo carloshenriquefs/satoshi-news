@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import br.com.fiap.satoshi.factory.RetrofitFactory
@@ -30,11 +31,11 @@ class HomeViewModel : ViewModel() {
 
         val getCryptoTopThree = RetrofitFactory()
             .getCryptoService()
-            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo")
+            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
 
         val getCryptoSustainable = RetrofitFactory()
             .getCryptoService()
-            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo")
+            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
 
         getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
             override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
@@ -44,6 +45,7 @@ class HomeViewModel : ViewModel() {
             }
 
             override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
+                Log.e("FIAP", "Error Cima: ${p1.cause}")
                 isLoading.value = false
             }
         })
@@ -59,6 +61,7 @@ class HomeViewModel : ViewModel() {
             }
 
             override fun onFailure(p0: Call<DataSustainable>, p1: Throwable) {
+                Log.e("FIAP", "Error Baixo: ${p1.cause}")
                 isLoading.value = false
             }
         })
