@@ -33,7 +33,6 @@ import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ConvertCard
 import br.com.fiap.satoshi.components.Card.Companion.TopCryptoCard
-import br.com.fiap.satoshi.components.DropDown
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoSustainable

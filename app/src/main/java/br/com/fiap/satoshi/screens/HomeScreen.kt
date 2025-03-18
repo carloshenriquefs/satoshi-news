@@ -56,7 +56,6 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     val isLoading by viewModel.isLoading
     val authError by viewModel.authError
 
-
     LaunchedEffect(Unit) {
         viewModel.loadCryptoData()
     }
@@ -196,7 +195,6 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
                                 Spacer(modifier = Modifier.width(20.dp))
 
                             }
-
                         }
                     }
 

@@ -120,7 +120,7 @@ class Card {
 
         @Composable
         fun TopCryptoCard(
-            icon: Int,
+            icon: String,
             name: String,
             valueDolar: String,
             priceChange: String,
@@ -143,8 +143,8 @@ class Card {
                         .fillMaxWidth()
                         .padding(10.dp)
                 ) {
-                    Image(
-                        painter = painterResource(icon),
+                    AsyncImage(
+                        model = icon,
                         contentDescription = stringResource(R.string.bitcoin_logo),
                         modifier = Modifier
                             .size(40.dp)
@@ -388,7 +388,7 @@ class Card {
             image: String,
             esgScore: Int,
             currentPrice: Double,
-            marketCap: Long,
+            marketCap: Int,
             onClick: () -> Unit
         ) {
 
@@ -422,7 +422,7 @@ class Card {
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         fontSize = 20.sp,
 
-                    )
+                        )
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -498,6 +498,12 @@ class Card {
     @Preview
     @Composable
     private fun Aa() {
-        CryptoCardInfo(title = "Algorand", image = "sss", esgScore = 20, currentPrice = 2222.2, marketCap = 2222, onClick = {})
+        CryptoCardInfo(
+            title = "Algorand",
+            image = "sss",
+            esgScore = 20,
+            currentPrice = 2222.2,
+            marketCap = 2222,
+            onClick = {})
     }
 }

@@ -52,9 +52,9 @@ class Icons {
         @Composable
         fun AnimatedCryptoIcon(iconRes: Int, targetX: Dp, targetY: Dp, isVisible: Boolean, delayTime: Int) {
             val startX = when {
-                targetX > 0.dp -> targetX + 200.dp // Ícones à direita entram da direita
-                targetX < 0.dp -> targetX - 200.dp // Ícones à esquerda entram da esquerda
-                else -> targetX // Ícones centrais não movem na horizontal
+                targetX > 0.dp -> targetX + 200.dp
+                targetX < 0.dp -> targetX - 200.dp
+                else -> targetX
             }
 
             val animatedX by animateDpAsState(
@@ -64,7 +64,7 @@ class Icons {
             )
 
             val animatedY by animateDpAsState(
-                targetValue = if (isVisible) targetY else targetY - 200.dp, // Todos descem de cima
+                targetValue = if (isVisible) targetY else targetY - 200.dp,
                 animationSpec = tween(durationMillis = 1000, delayMillis = delayTime, easing = FastOutSlowInEasing),
                 label = "Y Animation"
             )
