@@ -1,23 +1,18 @@
 package br.com.fiap.satoshi.viewmodel
 
-import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoProfitable
 import br.com.fiap.satoshi.model.CryptoSustainable
 import br.com.fiap.satoshi.model.DataProfitable
 import br.com.fiap.satoshi.model.DataSustainable
-import br.com.fiap.satoshi.utils.UserPreferences
-import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class HomeViewModel (application: Application) : AndroidViewModel(application) {
-
-    private val userPreferences = UserPreferences(application.applicationContext)
+class HomeViewModel : ViewModel() {
 
     var cryptoTopThree = mutableStateOf<List<CryptoProfitable>>(emptyList())
         private set
@@ -34,23 +29,13 @@ class HomeViewModel (application: Application) : AndroidViewModel(application) {
     fun loadCryptoData() {
         isLoading.value = true
 
-//        val token = userPreferences.getAuthToken()
-//
-//        if (token.isNullOrEmpty()) {
-//            authError.value = true
-//            isLoading.value = false
-//            return
-//        }
-
-        //val autHeader = "Bearer $token"
-
         val getCryptoTopThree = RetrofitFactory()
             .getCryptoService()
-            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
+            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
 
         val getCryptoSustainable = RetrofitFactory()
             .getCryptoService()
-            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
+            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
 
         getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
             override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
@@ -60,6 +45,7 @@ class HomeViewModel (application: Application) : AndroidViewModel(application) {
             }
 
             override fun onFailure(p0: Call<DataProfitable>, p1: Throwable) {
+                Log.e("FIAP", "Error Cima: ${p1.cause}")
                 isLoading.value = false
             }
         })
@@ -75,6 +61,7 @@ class HomeViewModel (application: Application) : AndroidViewModel(application) {
             }
 
             override fun onFailure(p0: Call<DataSustainable>, p1: Throwable) {
+                Log.e("FIAP", "Error Baixo: ${p1.cause}")
                 isLoading.value = false
             }
         })

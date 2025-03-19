@@ -1,8 +1,8 @@
 package br.com.fiap.satoshi.service
 
-import br.com.fiap.satoshi.model.AlertsCurrencyResponse
 import br.com.fiap.satoshi.model.CryptoDetail
 import br.com.fiap.satoshi.model.CryptoSustainable
+import br.com.fiap.satoshi.model.DataNewsLetter
 import br.com.fiap.satoshi.model.DataProfitable
 import br.com.fiap.satoshi.model.DataSustainable
 import br.com.fiap.satoshi.model.LoginRequest
@@ -27,9 +27,9 @@ interface CryptoService {
     @GET("/crypto/detail")
     fun getDetail(@Header("Authorization") token: String, @Query("coinId") coinId: String): Call<CryptoDetail>
 
-    @GET("/posts")
-    fun getAllAlerts(@Header("Authorization") token: String): Call<AlertsCurrencyResponse>
+    @GET("/posts?limit=2")
+    fun getPost(@Header("Authorization") token: String): Call<DataNewsLetter>
 
-    @GET("/crypto/convert")
+    @GET("conversion")
     fun getAllConversion(): Call<CryptoSustainable>
 }
