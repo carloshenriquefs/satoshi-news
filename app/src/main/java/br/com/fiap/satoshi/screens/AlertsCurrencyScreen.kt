@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,11 +14,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,11 +27,10 @@ import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
-import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.AlertsCurrency
-import br.com.fiap.satoshi.model.AlertsResult
+import br.com.fiap.satoshi.model.AlertsCurrencyResponse
 import br.com.fiap.satoshi.ui.theme.InterBold
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,20 +39,35 @@ import retrofit2.Response
 @Composable
 fun AlertsCurrencyScreen(navController: NavController) {
 
-    val alertsList by remember {
-        mutableStateOf(listOf<AlertsCurrency>())
-    }
+    val alertsList = remember { mutableStateListOf<AlertsCurrency>() }
 
     val callAlerts = RetrofitFactory()
         .getCryptoService()
-        .getAllAlerts()
+        .getAllAlerts(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
 
-    callAlerts.enqueue(object : Callback<AlertsResult> {
-        override fun onResponse(call: Call<AlertsResult>, response: Response<AlertsResult>) {
-            Log.i("FIAP", "onResponse: ${response.body()}")
+    callAlerts.enqueue(object : Callback<AlertsCurrencyResponse> {
+        override fun onResponse(
+            call: Call<AlertsCurrencyResponse>,
+            response: Response<AlertsCurrencyResponse>
+        ) {
+//            response.body()?.let { apiResponse ->
+//                val safeAlerts = apiResponse.alerts ?: emptyList()
+//                alertsList.clear()
+//                alertsList.addAll(safeAlerts)
+//            }
+//            Log.i("FIAP", "onResponse: ${response.body()}")
+
+            if (response.isSuccessful) {
+                response.body()?.let { apiResponse ->
+                    alertsList.clear() // Corrigido ✅
+                    apiResponse.data?.let { alertsList.addAll(it) } // Corrigido ✅
+                }
+            } else {
+                Log.e("API_ERROR", "Erro na API: ${response.errorBody()?.string()}")
+            }
         }
 
-        override fun onFailure(call: Call<AlertsResult>, t: Throwable) {
+        override fun onFailure(call: Call<AlertsCurrencyResponse>, t: Throwable) {
             Log.i("FIAP", "onResponse: ${t.message}")
         }
     })
@@ -64,7 +79,9 @@ fun AlertsCurrencyScreen(navController: NavController) {
     ) {
 
         Column(
-            modifier = Modifier.padding(40.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(40.dp)
         ) {
             ComponentBack(
                 stringResource(R.string.back_icon),
@@ -87,9 +104,13 @@ fun AlertsCurrencyScreen(navController: NavController) {
                 fontFamily = InterBold
             )
 
-            LazyColumn {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
                 items(alertsList) { alerts ->
-
+                    Log.e("FIAP TESTE TELA ALERTS", alerts.toString())
                     Spacer(modifier = Modifier.height(30.dp))
 
                     ComponentNewsLetter(
@@ -98,19 +119,9 @@ fun AlertsCurrencyScreen(navController: NavController) {
                         coin = alerts.subtitle,
                         onClick = { navController.navigate("newsletter") }
                     )
-
                 }
             }
         }
-
-        ComponentMenu(
-            leftIcon = painterResource(R.drawable.left_icon_bottom_bar),
-            midIcon = painterResource(R.drawable.mid_icon_bottom_bar),
-            rightIcon = painterResource(R.drawable.rigth_icon_bottom_bar),
-            onLeftClick = { navController.navigate("alerts") },
-            onMidClick = { navController.navigate("home") },
-            onRightClick = { navController.navigate("conversion") }
-        )
     }
 }
 

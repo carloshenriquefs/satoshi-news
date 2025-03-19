@@ -1,7 +1,6 @@
 package br.com.fiap.satoshi.screens
 
 import android.util.Log
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,7 +51,10 @@ fun ConversionScreen(navController: NavController) {
         .getAllConversion()
 
     callConversion.enqueue(object : Callback<CryptoSustainable> {
-        override fun onResponse(call: Call<CryptoSustainable>, response: Response<CryptoSustainable>) {
+        override fun onResponse(
+            call: Call<CryptoSustainable>,
+            response: Response<CryptoSustainable>
+        ) {
             Log.i("FIAP", "onResponse: ${response.body()}")
         }
 
@@ -140,7 +141,7 @@ fun ConversionScreen(navController: NavController) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(ScrollState(0))
+                        .weight(1f)
                 ) {
                     items(conversionList) { conversion ->
                         TopCryptoCard(

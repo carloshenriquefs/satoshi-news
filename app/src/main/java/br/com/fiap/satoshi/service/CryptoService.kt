@@ -1,6 +1,6 @@
 package br.com.fiap.satoshi.service
 
-import br.com.fiap.satoshi.model.AlertsResult
+import br.com.fiap.satoshi.model.AlertsCurrencyResponse
 import br.com.fiap.satoshi.model.CryptoDetail
 import br.com.fiap.satoshi.model.CryptoSustainable
 import br.com.fiap.satoshi.model.DataProfitable
@@ -16,7 +16,7 @@ import retrofit2.http.Query
 interface CryptoService {
 
     @POST("/auth/login")
-    fun logIn(@Body cryptoLogin: LoginRequest): String
+    fun logIn(@Body cryptoLogin: LoginRequest): Call<String>
 
     @GET("/crypto/top-profitable?take=3")
     fun getTopProfitable(@Header("Authorization") token: String): Call<DataProfitable>
@@ -27,9 +27,9 @@ interface CryptoService {
     @GET("/crypto/detail")
     fun getDetail(@Header("Authorization") token: String, @Query("coinId") coinId: String): Call<CryptoDetail>
 
-    @GET("alerts")
-    fun getAllAlerts(): Call<AlertsResult>
+    @GET("/posts")
+    fun getAllAlerts(@Header("Authorization") token: String): Call<AlertsCurrencyResponse>
 
-    @GET("conversion")
+    @GET("/crypto/convert")
     fun getAllConversion(): Call<CryptoSustainable>
 }

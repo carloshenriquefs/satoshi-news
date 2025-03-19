@@ -1,17 +1,23 @@
 package br.com.fiap.satoshi.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoProfitable
 import br.com.fiap.satoshi.model.CryptoSustainable
 import br.com.fiap.satoshi.model.DataProfitable
 import br.com.fiap.satoshi.model.DataSustainable
+import br.com.fiap.satoshi.utils.UserPreferences
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel (application: Application) : AndroidViewModel(application) {
+
+    private val userPreferences = UserPreferences(application.applicationContext)
 
     var cryptoTopThree = mutableStateOf<List<CryptoProfitable>>(emptyList())
         private set
@@ -28,13 +34,23 @@ class HomeViewModel : ViewModel() {
     fun loadCryptoData() {
         isLoading.value = true
 
+//        val token = userPreferences.getAuthToken()
+//
+//        if (token.isNullOrEmpty()) {
+//            authError.value = true
+//            isLoading.value = false
+//            return
+//        }
+
+        //val autHeader = "Bearer $token"
+
         val getCryptoTopThree = RetrofitFactory()
             .getCryptoService()
-            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo")
+            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
 
         val getCryptoSustainable = RetrofitFactory()
             .getCryptoService()
-            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIyNTE1MDIsImV4cCI6MTc0MjI1NTEwMn0.8alYN4w0e45JNgrPofo1irugtpEy0IpAv_ykvXB2Opo")
+            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
 
         getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
             override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {
