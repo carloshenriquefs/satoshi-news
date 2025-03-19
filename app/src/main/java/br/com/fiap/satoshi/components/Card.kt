@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -276,8 +277,7 @@ class Card {
             Card(
                 colors = CardDefaults.cardColors(containerColor = colorResource(R.color.background)),
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(top = 30.dp)
             ) {
                 Column(
@@ -320,8 +320,7 @@ class Card {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp)
-                            .verticalScroll(ScrollState(0)),
+                            .padding(20.dp),
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
