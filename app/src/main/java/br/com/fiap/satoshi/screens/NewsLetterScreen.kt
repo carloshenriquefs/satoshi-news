@@ -2,14 +2,18 @@ package br.com.fiap.satoshi.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +48,7 @@ fun NewsLetterScreen(navController: NavController) {
 
     val getPostData = RetrofitFactory()
         .getCryptoService()
-        .getPost(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
+        .getPost()
 
     getPostData.enqueue(object : Callback<DataNewsLetter> {
         override fun onResponse(p0: Call<DataNewsLetter>, p1: Response<DataNewsLetter>) {
@@ -64,6 +68,7 @@ fun NewsLetterScreen(navController: NavController) {
         modifier = Modifier
             .background(colorResource(id = R.color.black))
             .fillMaxWidth()
+            .verticalScroll(ScrollState(0))
     ) {
 
         Row(
@@ -138,6 +143,9 @@ fun NewsLetterScreen(navController: NavController) {
                 text = it.article
             )
         }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
     }
 
     ComponentMenu(

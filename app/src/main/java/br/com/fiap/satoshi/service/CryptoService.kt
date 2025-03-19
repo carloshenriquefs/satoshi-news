@@ -21,19 +21,19 @@ interface CryptoService {
     fun logIn(@Body cryptoLogin: LoginRequest): String
 
     @GET("/crypto/top-profitable?take=3")
-    fun getTopProfitable(@Header("Authorization") token: String): Call<DataProfitable>
+    fun getTopProfitable(): Call<DataProfitable>
 
     @GET("/crypto/top-sustainable")
-    fun getTopSustainable(@Header("Authorization") token: String): Call<DataSustainable>
+    fun getTopSustainable(): Call<DataSustainable>
 
     @GET("/crypto/detail")
-    fun getDetail(@Header("Authorization") token: String, @Query("coinId") coinId: String): Call<CryptoDetail>
+    fun getDetail(@Query("coinId") coinId: String): Call<CryptoDetail>
 
     @GET("alerts")
     fun getAllAlerts(): Call<AlertsResult>
 
     @GET("/posts?limit=2")
-    fun getPost(@Header("Authorization") token: String): Call<DataNewsLetter>
+    fun getPost(): Call<DataNewsLetter>
 
     @GET("conversion")
     fun getAllConversion(): Call<CryptoSustainable>

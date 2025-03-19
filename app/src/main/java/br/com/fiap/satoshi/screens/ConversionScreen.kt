@@ -140,7 +140,6 @@ fun ConversionScreen(navController: NavController) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(ScrollState(0))
                 ) {
                     items(conversionList) { conversion ->
                         TopCryptoCard(
