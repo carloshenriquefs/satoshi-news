@@ -46,7 +46,7 @@ fun ConversionScreen(navController: NavController) {
 
     val callConversion = RetrofitFactory()
         .getCryptoService()
-        .getAllConversion(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
+        .getAllConversion()
 
     callConversion.enqueue(object : Callback<DataCryptoSustainable> {
         override fun onResponse(

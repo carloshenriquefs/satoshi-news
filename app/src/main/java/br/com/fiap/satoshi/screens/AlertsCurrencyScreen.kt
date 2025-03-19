@@ -44,7 +44,7 @@ fun AlertsCurrencyScreen(navController: NavController) {
 
     val callAlerts = RetrofitFactory()
         .getCryptoService()
-        .getPost(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDYyNTQsImV4cCI6MTc0MjM0OTg1NH0.L8Ars8kL2fsiWK5YyOEQsZyjIuo-u0tYBLtZb55DLes")
+        .getPost()
 
     callAlerts.enqueue(object : Callback<DataNewsLetter> {
         override fun onResponse(

@@ -31,5 +31,5 @@ interface CryptoService {
     fun getPost(): Call<DataNewsLetter>
 
     @GET("/crypto/convert")
-    fun getAllConversion(@Header("Authorization") token: String): Call<DataCryptoSustainable>
+    fun getAllConversion(): Call<DataCryptoSustainable>
 }
