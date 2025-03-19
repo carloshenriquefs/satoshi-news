@@ -247,7 +247,7 @@ class Card {
                             fontSize = 15.sp,
                             fontWeight = FontWeight.ExtraBold,
                             color = colorResource(id = R.color.white),
-                            fontFamily = InterRegular
+                            fontFamily = InterBold
                         )
 
                         Text(

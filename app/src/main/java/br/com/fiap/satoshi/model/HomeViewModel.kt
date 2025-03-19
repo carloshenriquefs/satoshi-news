@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel() : ViewModel() {
 
     private val mockCryptoTopThree = listOf(
         CryptoProfitable("eos", "eos", "EOS", "https://coin-images.coingecko.com/coins/images/738/large/CG_EOS_Icon.png?1731705232", 0.655193, 32.70716),
@@ -44,11 +45,12 @@ class HomeViewModel : ViewModel() {
 
         val getCryptoTopThree = RetrofitFactory()
             .getCryptoService()
-            .getTopProfitable()
+            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
 
         val getCryptoSustainable = RetrofitFactory()
             .getCryptoService()
-            .getTopSustainable()
+            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
+
 
         getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
             override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {

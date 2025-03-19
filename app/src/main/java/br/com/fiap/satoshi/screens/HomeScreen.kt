@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.screens
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
@@ -31,22 +32,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCard
 import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
-import br.com.fiap.satoshi.components.Graphs
+import br.com.fiap.satoshi.components.Graphs.Companion.LoadingScreen
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
-import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.fiap.satoshi.viewmodel.HomeViewModel
-
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewModel()) {
@@ -55,6 +56,12 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     val cryptoSustainable by viewModel.cryptoSustainable
     val isLoading by viewModel.isLoading
     val authError by viewModel.authError
+
+    val context = LocalContext.current
+    val application = LocalContext.current.applicationContext as Application
+//    val homeViewModel: HomeViewModel = viewModel(
+//        factory = HomeViewModelFactory(application)
+//    )
 
     LaunchedEffect(Unit) {
         viewModel.loadCryptoData()
@@ -76,7 +83,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     ) {
         when {
             isLoading -> {
-                Graphs.LoadingScreen(true)
+                LoadingScreen(true)
             }
 
             else -> {
@@ -131,8 +138,10 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
                             )
                         }
 
-                        LazyRow(modifier = Modifier
-                                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
                             items(cryptoTopThree) {
                                 CryptoCard(
                                     name = it.name,

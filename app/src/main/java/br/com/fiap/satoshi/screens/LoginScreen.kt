@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,11 +35,15 @@ import br.com.fiap.satoshi.R
 import br.com.fiap.satoshi.components.Button.Companion.ComponentButton
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInbox
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentInboxPassword
+import br.com.fiap.satoshi.model.LoginViewModel
 import br.com.fiap.satoshi.ui.theme.InterBold
 import br.com.fiap.satoshi.ui.theme.InterRegular
+import br.com.fiap.satoshi.utils.RegexUtils
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(context: Context, navController: NavController) {
+
+    val loginViewModel = remember { LoginViewModel(context) }
 
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
@@ -47,6 +52,7 @@ fun LoginScreen(navController: NavController) {
     var passwordError by remember { mutableStateOf(false) }
 
     var rememberPassword by remember { mutableStateOf(false) }
+    var loginError by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -100,6 +106,14 @@ fun LoginScreen(navController: NavController) {
                 errorMessage = "Password Required"
             )
 
+            if (loginError != null) {
+                Text(
+                    text = loginError!!,
+                    color = Color.Red,
+                    fontSize = 14.sp
+                )
+            }
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
@@ -128,11 +142,20 @@ fun LoginScreen(navController: NavController) {
             ComponentButton(
                 label = stringResource(R.string.log_in),
                 onClick = {
-                    emailError = email.isBlank()
-                    passwordError = password.isBlank()
+                    emailError = !RegexUtils.isValidEmail(email)
+                    passwordError = !RegexUtils.isValidPassword(password)
 
                     if (!emailError && !passwordError) {
-                        navController.navigate("home")
+                        loginViewModel.login(
+                            email = email,
+                            password = password,
+                            onSuccess = {
+                                navController.navigate("home")
+                            },
+                            onError = { error ->
+                                loginError = error
+                            }
+                        )
                     }
                 }
             )
@@ -163,7 +186,6 @@ fun LoginScreen(navController: NavController) {
                 contentDescription = stringResource(R.string.google),
                 modifier = Modifier.size(20.dp)
             )
-
         }
     }
 }
