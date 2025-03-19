@@ -2,27 +2,13 @@ package br.com.fiap.satoshi.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,10 +27,11 @@ import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoDetail
 import coil.compose.AsyncImage
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 @Composable
 fun GraphsScreen(navController: NavController, id: String) {
@@ -52,30 +39,62 @@ fun GraphsScreen(navController: NavController, id: String) {
     var cryptoDetails by remember { mutableStateOf<CryptoDetail?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var retryCount by remember { mutableStateOf(0) }
 
-    val getDetails = RetrofitFactory()
-        .getCryptoService()
-        .getDetail(
-            token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM" +
-                    "", coinId = id
-        )
-    getDetails.enqueue(object : Callback<CryptoDetail> {
-        override fun onResponse(p0: Call<CryptoDetail>, resultado: Response<CryptoDetail>) {
-            isLoading = false
-            if (resultado.isSuccessful) {
-                cryptoDetails = resultado.body()
+    val maxRetries = 10
+    val retryDelayMillis = 10_000L
+    val coroutineScope = rememberCoroutineScope()
 
-            } else Log.e(
-                "FIAP",
-                "Erro na API: ${resultado.message()} - Código: ${resultado.code()}"
+    lateinit var fetchCryptoDetails: () -> Unit
+    lateinit var retryRequest: () -> Unit
+
+    fetchCryptoDetails = {
+        isLoading = true
+        errorMessage = null
+
+        val getDetails = RetrofitFactory()
+            .getCryptoService()
+            .getDetail(
+                coinId = id
             )
-        }
 
-        override fun onFailure(p0: Call<CryptoDetail>, p1: Throwable) {
+        getDetails.enqueue(object : Callback<CryptoDetail> {
+            override fun onResponse(p0: Call<CryptoDetail>, resultado: Response<CryptoDetail>) {
+                if (resultado.isSuccessful && resultado.body() != null) {
+                    cryptoDetails = resultado.body()
+                    isLoading = false
+                    retryCount = 0
+                } else {
+                    Log.e("FIAP", "Erro na API: ${resultado.message()} - Código: ${resultado.code()}")
+                    retryRequest()
+                }
+            }
+
+            override fun onFailure(p0: Call<CryptoDetail>, p1: Throwable) {
+                errorMessage = "Falha na requisição: ${p1.message}"
+                Log.e("FIAP", "Erro de conexão: ${p1.message}")
+                retryRequest()
+            }
+        })
+    }
+
+    retryRequest = {
+        if (retryCount < maxRetries) {
+            retryCount++
+            Log.i("FIAP", "Tentativa de retry $retryCount de $maxRetries")
+            coroutineScope.launch {
+                delay(retryDelayMillis)
+                fetchCryptoDetails()
+            }
+        } else {
             isLoading = false
-            errorMessage = "Falha na requisição: ${p1.message}"
+            errorMessage = "Falha ao carregar os dados após $maxRetries tentativas."
         }
-    })
+    }
+
+    LaunchedEffect(Unit) {
+        fetchCryptoDetails()
+    }
 
     Box(
         modifier = Modifier
@@ -125,7 +144,9 @@ fun GraphsScreen(navController: NavController, id: String) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            if (isLoading) Graphs.LoadingScreen(true) else {
+            if (isLoading) {
+                Graphs.LoadingScreen(true)
+            } else {
                 errorMessage?.let {
                     Text(text = it, color = Color.Red, fontWeight = FontWeight.Bold)
                 }
@@ -208,7 +229,6 @@ fun GraphsScreen(navController: NavController, id: String) {
                             fontWeight = FontWeight.Bold
                         )
                     }
-
                 }
             }
             Spacer(modifier = Modifier.height(60.dp))
@@ -223,9 +243,4 @@ fun GraphsScreen(navController: NavController, id: String) {
         onMidClick = { navController.navigate("home") },
         onRightClick = { navController.navigate("conversion") }
     )
-
 }
-
-
-
-
