@@ -47,7 +47,6 @@ import br.com.fiap.satoshi.components.Card.Companion.CryptoCardInfo
 import br.com.fiap.satoshi.components.Graphs.Companion.LoadingScreen
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
-import br.com.fiap.satoshi.factory.HomeViewModelFactory
 import br.com.fiap.satoshi.viewmodel.HomeViewModel
 
 @Composable
@@ -60,9 +59,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
 
     val context = LocalContext.current
     val application = LocalContext.current.applicationContext as Application
-    val homeViewModel: HomeViewModel = viewModel(
-        factory = HomeViewModelFactory(application)
-    )
+//    val homeViewModel: HomeViewModel = viewModel(
+//        factory = HomeViewModelFactory(application)
+//    )
 
     LaunchedEffect(Unit) {
         viewModel.loadCryptoData()

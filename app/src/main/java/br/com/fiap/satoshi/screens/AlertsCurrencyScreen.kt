@@ -13,9 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -29,47 +27,44 @@ import br.com.fiap.satoshi.components.Back.Companion.ComponentBack
 import br.com.fiap.satoshi.components.Card.Companion.ComponentNewsLetter
 import br.com.fiap.satoshi.components.OutlinedTextField.Companion.ComponentSearch
 import br.com.fiap.satoshi.factory.RetrofitFactory
-import br.com.fiap.satoshi.model.AlertsCurrency
-import br.com.fiap.satoshi.model.AlertsCurrencyResponse
+import br.com.fiap.satoshi.model.DataNewsLetter
+import br.com.fiap.satoshi.model.Newsletter
 import br.com.fiap.satoshi.ui.theme.InterBold
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AlertsCurrencyScreen(navController: NavController) {
 
-    val alertsList = remember { mutableStateListOf<AlertsCurrency>() }
+    val alertsList = remember { mutableStateListOf<Newsletter>() }
 
     val callAlerts = RetrofitFactory()
         .getCryptoService()
-        .getAllAlerts(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDEwMjgsImV4cCI6MTc0MjM0NDYyOH0.2EjIYkloRj-kFcvL1mJf6wsxuIAAOeJRgSmFwMSreBg")
+        .getPost(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNDYyNTQsImV4cCI6MTc0MjM0OTg1NH0.L8Ars8kL2fsiWK5YyOEQsZyjIuo-u0tYBLtZb55DLes")
 
-    callAlerts.enqueue(object : Callback<AlertsCurrencyResponse> {
+    callAlerts.enqueue(object : Callback<DataNewsLetter> {
         override fun onResponse(
-            call: Call<AlertsCurrencyResponse>,
-            response: Response<AlertsCurrencyResponse>
+            p0: Call<DataNewsLetter>,
+            response: Response<DataNewsLetter>
         ) {
-//            response.body()?.let { apiResponse ->
-//                val safeAlerts = apiResponse.alerts ?: emptyList()
-//                alertsList.clear()
-//                alertsList.addAll(safeAlerts)
-//            }
-//            Log.i("FIAP", "onResponse: ${response.body()}")
-
             if (response.isSuccessful) {
                 response.body()?.let { apiResponse ->
-                    alertsList.clear() // Corrigido ✅
-                    apiResponse.data?.let { alertsList.addAll(it) } // Corrigido ✅
+                    alertsList.clear()
+                    apiResponse.data?.let { alertsList.addAll(it) }
                 }
             } else {
                 Log.e("API_ERROR", "Erro na API: ${response.errorBody()?.string()}")
             }
         }
 
-        override fun onFailure(call: Call<AlertsCurrencyResponse>, t: Throwable) {
+        override fun onFailure(p0: Call<DataNewsLetter>, t: Throwable) {
             Log.i("FIAP", "onResponse: ${t.message}")
         }
+
     })
 
     Box(
@@ -111,18 +106,26 @@ fun AlertsCurrencyScreen(navController: NavController) {
             ) {
                 items(alertsList) { alerts ->
                     Log.e("FIAP TESTE TELA ALERTS", alerts.toString())
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     ComponentNewsLetter(
-                        alert = alerts.title,
-                        date = alerts.updatedAt,
-                        coin = alerts.subtitle,
+                        alert = alerts.authorName,
+                        date = formatDate(alerts.updatedAt),
+                        coin = alerts.title,
                         onClick = { navController.navigate("newsletter") }
                     )
                 }
             }
         }
     }
+}
+
+fun formatDate(isDate: String): String {
+    val instant = Instant.parse(isDate)
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        .withZone(ZoneId.systemDefault())
+
+    return formatter.format(instant)
 }
 
 //@Preview(showSystemUi = true)

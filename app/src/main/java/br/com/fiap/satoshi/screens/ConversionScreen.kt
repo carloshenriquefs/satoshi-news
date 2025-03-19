@@ -16,8 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -34,6 +33,7 @@ import br.com.fiap.satoshi.components.Card.Companion.TopCryptoCard
 import br.com.fiap.satoshi.components.Menu.Companion.ComponentMenu
 import br.com.fiap.satoshi.factory.RetrofitFactory
 import br.com.fiap.satoshi.model.CryptoSustainable
+import br.com.fiap.satoshi.model.DataCryptoSustainable
 import br.com.fiap.satoshi.ui.theme.InterBold
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,24 +42,29 @@ import retrofit2.Response
 @Composable
 fun ConversionScreen(navController: NavController) {
 
-    val conversionList by remember {
-        mutableStateOf(listOf<CryptoSustainable>())
-    }
+    val conversionList = remember { mutableStateListOf<CryptoSustainable>() }
 
     val callConversion = RetrofitFactory()
         .getCryptoService()
-        .getAllConversion()
+        .getAllConversion(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
 
-    callConversion.enqueue(object : Callback<CryptoSustainable> {
+    callConversion.enqueue(object : Callback<DataCryptoSustainable> {
         override fun onResponse(
-            call: Call<CryptoSustainable>,
-            response: Response<CryptoSustainable>
+            call: Call<DataCryptoSustainable>,
+            response: Response<DataCryptoSustainable>
         ) {
-            Log.i("FIAP", "onResponse: ${response.body()}")
+            if (response.isSuccessful) {
+                response.body()?.let { crypto ->
+                    conversionList.clear()
+                    crypto.data?.let { conversionList.addAll(it) }
+                }
+            } else {
+                Log.e("API_ERROR", "Erro na API: ${response.errorBody()?.string()}")
+            }
         }
 
-        override fun onFailure(call: Call<CryptoSustainable>, t: Throwable) {
-            Log.i("FIAP", "onResponse: ${t.message}")
+        override fun onFailure(p0: Call<DataCryptoSustainable>, t: Throwable) {
+            Log.e("API_ERROR", "Falha na requisição: ${t.message}")
         }
     })
 

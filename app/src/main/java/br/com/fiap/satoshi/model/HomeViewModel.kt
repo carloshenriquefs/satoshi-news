@@ -1,5 +1,6 @@
 package br.com.fiap.satoshi.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel() : ViewModel() {
 
     var cryptoTopThree = mutableStateOf<List<CryptoProfitable>>(emptyList())
         private set
@@ -31,11 +32,11 @@ class HomeViewModel : ViewModel() {
 
         val getCryptoTopThree = RetrofitFactory()
             .getCryptoService()
-            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
+            .getTopProfitable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
 
         val getCryptoSustainable = RetrofitFactory()
             .getCryptoService()
-            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzMjk2MTAsImV4cCI6MTc0MjMzMzIxMH0.1BlGGIKhQm0F2GGNZBAKWWkIM-IUqnngIby_4UP3NOM")
+            .getTopSustainable(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M0ZWRmN2UyZDFlZGJiNjE0MWQ0MjgiLCJpYXQiOjE3NDIzNTIyMDIsImV4cCI6MTc0Mjk1NzAwMn0.YS0CbsyVBP_6qnL9DVzUVdcPxemNtjH5dnVxUUOrArQ")
 
         getCryptoTopThree.enqueue(object : Callback<DataProfitable> {
             override fun onResponse(p0: Call<DataProfitable>, resultado: Response<DataProfitable>) {

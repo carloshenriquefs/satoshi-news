@@ -1,7 +1,7 @@
 package br.com.fiap.satoshi.service
 
 import br.com.fiap.satoshi.model.CryptoDetail
-import br.com.fiap.satoshi.model.CryptoSustainable
+import br.com.fiap.satoshi.model.DataCryptoSustainable
 import br.com.fiap.satoshi.model.DataNewsLetter
 import br.com.fiap.satoshi.model.DataProfitable
 import br.com.fiap.satoshi.model.DataSustainable
@@ -30,6 +30,6 @@ interface CryptoService {
     @GET("/posts?limit=2")
     fun getPost(@Header("Authorization") token: String): Call<DataNewsLetter>
 
-    @GET("conversion")
-    fun getAllConversion(): Call<CryptoSustainable>
+    @GET("/crypto/convert")
+    fun getAllConversion(@Header("Authorization") token: String): Call<DataCryptoSustainable>
 }

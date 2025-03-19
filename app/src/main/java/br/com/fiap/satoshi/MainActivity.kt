@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     NavHost(
                         navController = navController,
-                        startDestination = "login"
+                        startDestination = "satoshi"
                     ) {
                         composable(route = "satoshi") { SatoshiNewsScreen(navController) }
                         composable(route = "login") { LoginScreen(context, navController) }
