@@ -67,4 +67,12 @@
     <string name="currentprice_title">Preço Atual: </string>
     <string name="marketcap_title">Capitalização de Mercado: </string>
 
+    <string name="create_password">Crie uma nova senha</string>
+    <string name="password_different">Sua nova senha deve ser diferente \nda senha usada anteriormente.</string>
+
+    <string name="confirm_password">Confirmar Senha</string>
+    <string name="reset_password">Recuperar Senha</string>
+
+    <string name="congratulations">Parabéns!</string>
+    <string name="password_updated">Sua senha foi atualizada!!!</string>
 </resources>

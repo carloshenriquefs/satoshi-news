@@ -68,4 +68,13 @@
     <string name="currentprice_title">Current\nPrice: </string>
     <string name="marketcap_title">Market\nCap: </string>
 
+    <string name="create_password">Create new password</string>
+    <string name="password_different">Your new password must be different \nfrom previous used passwords.</string>
+
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="reset_password">Reset Password</string>
+
+    <string name="congratulations">Congratulations!</string>
+    <string name="password_updated">Your password was updated!!!</string>
+
 </resources>
