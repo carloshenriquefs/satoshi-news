@@ -8,7 +8,6 @@
     <string name="already_account">Already have account ?</string>
     <string name="signin">Sign In</string>
 
-
     <string name="log_in_now">Log In Now</string>
     <string name="please_login">Please login to continue using our app</string>
 
@@ -26,7 +25,6 @@
 
     <string name="google"> Google Logo</string>
 
-
     <string name="sign_up">Sign Up Now</string>
     <string name="please_signup">Please signup to continue using our app</string>
     <string name="name">Name:</string>
@@ -35,7 +33,6 @@
     <string name="have_account">Already have an account ?</string>
 
     <string name="search">Enter your cryptocurrency:</string>
-
 
     <string name="notification_icon">Notification Icon</string>
     <string name="top_three_cryptos">Top 3 Cryptos</string>
@@ -47,13 +44,11 @@
     <string name="other_crypto">Other Crypto</string>
     <string name="see_all">See all</string>
 
-
     <string name="back_icon">Back Icon</string>
     <string name="convert_currency">Convert your Currency:</string>
     <string name="binance">Binance</string>
     <string name="USD">USD</string>
     <string name="top_crypto">Top Crypto:</string>
-
 
     <string name="newsletter">Newsletter List:</string>
     <string name="alert">New sustainable currency alert</string>
@@ -70,11 +65,13 @@
 
     <string name="create_password">Create new password</string>
     <string name="password_different">Your new password must be different \nfrom previous used passwords.</string>
+    <string name="password_required">Password Required</string>
+    <string name="confirm_password_required">Confirm Password Required</string>
+
+    <string name="congratulations">Congratulations !</string>
+    <string name="password_updated">Your password was updated !!!</string>
 
     <string name="confirm_password">Confirm Password:</string>
     <string name="reset_password">Reset Password</string>
-
-    <string name="congratulations">Congratulations!</string>
-    <string name="password_updated">Your password was updated!!!</string>
 
 </resources>
